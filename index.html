@@ -45,7 +45,7 @@
                     <i class="bi bi-whatsapp"></i><span>Simulador de perfiles</span>
                 </button>
                 <button @click="activeTab = 'dashboard-vivo'; initMap();" :class="activeTab === 'dashboard-vivo' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
-                    <i class="bi bi-map"></i><span>Mapa de ejemplo</span>
+                    <i class="bi bi-map"></i><span>Mapa de Buenaventura</span>
                 </button>
                 <button @click="activeTab = 'reputacion'" :class="activeTab === 'reputacion' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
                     <i class="bi bi-award"></i><span>Insignias de habilidades</span>
@@ -94,8 +94,7 @@
             <div class="flex items-start gap-3">
                 <i class="bi bi-info-circle-fill mt-0.5 text-terracota" aria-hidden="true"></i>
                 <p class="mb-0 leading-relaxed">
-                    <strong>Datos de la ciudad:</strong> las cifras de población para 2026 son proyecciones oficiales del DANE, no un conteo en tiempo real ni registros de PULSO.
-                    Los valores de ingresos y presupuesto son escenarios tentativos, todavía sin cotizaciones ni acuerdos.
+                    <strong>Datos disponibles:</strong> la población 2026 es una proyección oficial del DANE, no un conteo en tiempo real. Los perfiles son ficticios. PULSO aún no consulta vacantes ni tiene registros de empleos, usuarios, ingresos o presupuesto.
                 </p>
             </div>
         </div>
@@ -116,13 +115,13 @@
                     </h1>
 
                     <p class="text-lg sm:text-xl text-grafito leading-relaxed">
-                        Propuesta de servicio por WhatsApp para acercar las habilidades de las personas a las oportunidades de su comunidad, sin exigir hoja de vida. Esta página es una demostración: no consulta ofertas ni registros reales.
+                        Propuesta de servicio por WhatsApp para acercar las habilidades de las personas a oportunidades de su comunidad, sin exigir hoja de vida. La plataforma aún no está conectada a ofertas de trabajo.
                     </p>
 
                     <div class="pt-4 flex flex-wrap gap-4">
                         <button @click="activeTab = 'whatsapp'; initSimulator();" class="bg-tealPortuario hover:bg-tealHover text-white px-6 py-3 rounded-xl font-bold shadow-lg transition flex items-center space-x-2">
                             <i class="bi bi-whatsapp text-lg"></i>
-                            <span>Ver ejemplo de conversación</span>
+                            <span>Conocer la conversación</span>
                         </button>
                         <button @click="activeTab = 'dashboard-vivo'; initMap();" class="bg-white border border-blue-200 hover:bg-gray-50 text-azulProfundo px-6 py-3 rounded-xl font-bold shadow-sm transition flex items-center space-x-2">
                             <i class="bi bi-map text-tealPortuario text-lg"></i>
@@ -142,8 +141,8 @@
                     <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
                         <div class="w-12 h-12 rounded-xl bg-terracota/10 text-terracota flex items-center justify-center text-xl"><i class="bi bi-stopwatch"></i></div>
                         <div>
-                            <div class="text-xs font-semibold text-grafito uppercase">Meta tentativa: menos de 4 min</div>
-                            <div class="text-sm font-bold text-azulProfundo">Para sugerir una oportunidad; aún por probar</div>
+                            <div class="text-xs font-semibold text-grafito uppercase">Tiempo de respuesta</div>
+                            <div class="text-sm font-bold text-azulProfundo">Sin mediciones disponibles</div>
                         </div>
                     </div>
                     <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
@@ -240,12 +239,12 @@
                 </p>
             </section>
 
-            <!-- Perfiles y empleos de ejemplo -->
+            <!-- Orientación laboral para perfiles ficticios -->
             <div class="space-y-4">
                 <div class="text-center max-w-2xl mx-auto space-y-1">
-                    <span class="text-xs font-bold uppercase tracking-wider text-terracota bg-terracota/10 px-3 py-1 rounded-full">Perfiles y trabajos de muestra</span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Cada persona tiene un empleo sugerido</h2>
-                    <p class="text-sm text-grafito">Son ejemplos para mostrar posibles coincidencias; no son vacantes reales ni empleos confirmados.</p>
+                    <span class="text-xs font-bold uppercase tracking-wider text-terracota bg-terracota/10 px-3 py-1 rounded-full">Orientación laboral</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Opciones de trabajo relacionadas con cada perfil</h2>
+                    <p class="text-sm text-grafito">Son áreas ocupacionales sugeridas, no vacantes disponibles ni empleos confirmados.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
@@ -256,12 +255,11 @@
                             <h3 class="text-lg font-bold text-azulProfundo mt-1">Pepito (Comuna 12)</h3>
                             <p class="text-sm text-grafito mt-3 leading-relaxed">Sabe reparar celulares y manejar redes, aprende rápido. Le cuesta mostrar lo que sabe porque no tiene experiencia formal.</p>
                             <div class="mt-4 rounded-2xl bg-tealPortuario/5 p-4">
-                                <span class="text-xs font-bold uppercase tracking-wide text-tealPortuario">Empleo sugerido (ejemplo)</span>
+                                <span class="text-xs font-bold uppercase tracking-wide text-tealPortuario">Área laboral sugerida</span>
                                 <p class="mt-1 font-bold text-azulProfundo">Soporte digital barrial</p>
-                                <p class="text-xs text-grafito">Lugar ficticio, no confirmado: Comercializadora El Puerto (Comuna 7)</p>
                             </div>
                         </div>
-                        <div class="mt-4 pt-4 border-t border-gray-100 text-xs text-tealPortuario font-semibold flex items-center"><i class="bi bi-check-circle mr-1"></i> Perfil de muestra</div>
+                        <div class="mt-4 pt-4 border-t border-gray-100 text-xs text-tealPortuario font-semibold flex items-center"><i class="bi bi-info-circle mr-1"></i> Vacantes no consultadas</div>
                     </div>
 
                     <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between">
@@ -271,9 +269,8 @@
                             <h3 class="text-lg font-bold text-azulProfundo mt-1">Marta (Comuna 7)</h3>
                             <p class="text-sm text-grafito mt-3 leading-relaxed">Cocina para eventos y administra negocio de barrio. Su hoja de vida no lo refleja y sus horarios dependen del cuidado de sus hijos.</p>
                             <div class="mt-4 rounded-2xl bg-terracota/5 p-4">
-                                <span class="text-xs font-bold uppercase tracking-wide text-terracota">Empleo sugerido (ejemplo)</span>
+                                <span class="text-xs font-bold uppercase tracking-wide text-terracota">Área laboral sugerida</span>
                                 <p class="mt-1 font-bold text-azulProfundo">Auxiliar de cocina y logística</p>
-                                <p class="text-xs text-grafito">Lugar ficticio, no confirmado: Restaurante Mar y Sabor (Comuna 10)</p>
                             </div>
                         </div>
                         <div class="mt-4 pt-4 border-t border-gray-100 text-xs text-terracota font-semibold flex items-center"><i class="bi bi-check-circle mr-1"></i> Horario y apoyo de cuidado por acordar</div>
@@ -286,9 +283,8 @@
                             <h3 class="text-lg font-bold text-azulProfundo mt-1">Camila (Comuna 5)</h3>
                             <p class="text-sm text-grafito mt-3 leading-relaxed">Tiene habilidades de diseño y atención por chat. Necesita que las herramientas sean accesibles y cuenten con los apoyos adecuados.</p>
                             <div class="mt-4 rounded-2xl bg-azulProfundo/5 p-4">
-                                <span class="text-xs font-bold uppercase tracking-wide text-azulProfundo">Empleo sugerido (ejemplo)</span>
+                                <span class="text-xs font-bold uppercase tracking-wide text-azulProfundo">Área laboral sugerida</span>
                                 <p class="mt-1 font-bold text-azulProfundo">Gestora de canales digitales inclusivos</p>
-                                <p class="text-xs text-grafito">Lugar ficticio, no confirmado: Logística Pacífico (Comuna 5)</p>
                             </div>
                         </div>
                         <div class="mt-4 pt-4 border-t border-gray-100 text-xs text-azulProfundo font-semibold flex items-center"><i class="bi bi-check-circle mr-1"></i> Accesibilidad y modalidad por acordar</div>
@@ -301,8 +297,8 @@
         <div x-show="activeTab === 'whatsapp'" class="space-y-6 animate-fadeIn" style="display: none;">
             <div class="text-center max-w-2xl mx-auto space-y-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Un servicio pensado para la comunidad</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Ejemplo de conversación por WhatsApp</h2>
-                <p class="text-sm text-grafito">Elige un perfil de muestra para ver cómo podría funcionar el servicio. Los nombres, empleos y pagos no son ofertas reales.</p>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Asistente de orientación laboral</h2>
+                <p class="text-sm text-grafito">Elige un perfil de prueba. Los cargos son orientativos; no hay vacantes reales conectadas.</p>
             </div>
 
             <!-- Selector de Usuario -->
@@ -330,8 +326,8 @@
                                 <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></span>
                             </div>
                             <div>
-                                <h3 class="font-bold text-sm">Asistente de ejemplo de PULSO</h3>
-                                <span class="text-xs text-teal-100" x-text="'Perfil de muestra: ' + usersData[selectedUser].name"></span>
+                                <h3 class="font-bold text-sm">Asistente PULSO</h3>
+                                <span class="text-xs text-teal-100" x-text="'Perfil de prueba: ' + usersData[selectedUser].name"></span>
                             </div>
                         </div>
                         <button @click="resetWa()" class="text-xs bg-white/25 hover:bg-white/35 text-white px-3 py-1.5 rounded-lg transition font-semibold">
@@ -339,7 +335,7 @@
                         </button>
                     </div>
 
-                    <div class="flex-grow p-4 overflow-y-auto space-y-4 bg-[#f0f2f5]" role="log" aria-live="polite" aria-relevant="additions text" aria-label="Conversación de ejemplo">
+                    <div class="flex-grow p-4 overflow-y-auto space-y-4 bg-[#f0f2f5]" role="log" aria-live="polite" aria-relevant="additions text" aria-label="Conversación con el asistente">
                         <template x-for="msg in waMessages">
                             <div class="flex" :class="msg.sender === 'user' ? 'justify-end' : 'justify-start'">
                                 <div class="max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-sm"
@@ -355,14 +351,11 @@
 
                         <template x-if="matchResult">
                             <div class="bg-tealPortuario/10 border border-tealPortuario/30 rounded-2xl p-4 text-azulProfundo space-y-2 animate-fadeIn">
-                                <div class="flex items-center justify-between">
-                                    <span class="font-extrabold text-tealPortuario text-sm"><i class="bi bi-lightbulb-fill mr-1"></i> Coincidencia de ejemplo</span>
-                                    <span class="bg-tealPortuario text-white px-2 py-0.5 rounded text-xs font-bold" x-text="matchResult.score + ' estimado'"></span>
-                                </div>
-                                <p class="text-xs text-grafito">Lugar de ejemplo, no confirmado: <strong x-text="matchResult.company"></strong> &bull; Trabajo de muestra: <strong x-text="matchResult.role"></strong></p>
-                                <p class="text-xs text-grafito">Apoyo sugerido, no ofrecido: <strong x-text="matchResult.stipend"></strong></p>
-                                <p class="text-xs text-grafito">Tus preferencias: <strong x-text="matchResult.schedule + ', modalidad ' + matchResult.modality.toLowerCase()"></strong></p>
-                                <p class="text-xs text-grafito">Accesibilidad: <strong x-text="matchResult.accessibility"></strong> (por revisar con el lugar).</p>
+                                <span class="font-extrabold text-tealPortuario text-sm"><i class="bi bi-lightbulb-fill mr-1"></i> Orientación laboral</span>
+                                <p class="text-xs text-grafito">Área relacionada con tu perfil: <strong x-text="matchResult.role"></strong></p>
+                                <p class="text-xs text-grafito">Preferencia: <strong x-text="matchResult.schedule + ', modalidad ' + matchResult.modality.toLowerCase()"></strong></p>
+                                <p class="text-xs text-grafito">Apoyo solicitado: <strong x-text="matchResult.accessibility"></strong></p>
+                                <p class="text-xs font-semibold text-grafito">No hay una vacante ni un empleador verificados para ofrecerte.</p>
                             </div>
                         </template>
                     </div>
@@ -382,7 +375,7 @@
                         </template>
                         <template x-if="waStep >= 2">
                             <div class="text-center text-xs font-bold text-tealPortuario py-2">
-                                Ejemplo completado. Puedes ver el mapa de muestra.
+                                Orientación finalizada. No se envió ninguna solicitud.
                             </div>
                         </template>
                     </div>
@@ -393,10 +386,10 @@
                     <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
                         <h3 class="font-extrabold text-azulProfundo text-lg flex items-center">
                             <i class="bi bi-info-circle-fill text-tealPortuario mr-2"></i>
-                            Perfil de ejemplo: <span class="text-tealPortuario ml-1" x-text="usersData[selectedUser].name"></span>
+                            Perfil de prueba: <span class="text-tealPortuario ml-1" x-text="usersData[selectedUser].name"></span>
                         </h3>
                         <p class="text-sm text-grafito leading-relaxed">
-                            Elige las condiciones que prefieres. El asistente las tendrá en cuenta al mostrarte un empleo de muestra. No verifica vacantes ni confirma que un lugar pueda ofrecer esos ajustes.
+                            Elige tus condiciones. El asistente las tendrá en cuenta para orientarte, pero no consulta empleadores ni vacantes actuales.
                         </p>
                     </div>
                     <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
@@ -427,7 +420,7 @@
                                 </template>
                             </select>
                         </div>
-                        <p class="text-xs text-grafito">Puedes cambiar estas opciones. Son preferencias de ejemplo; los apoyos se deben acordar con cada lugar.</p>
+                        <p class="text-xs text-grafito">Puedes cambiar estas opciones. Los apoyos deben acordarse con el empleador.</p>
                     </div>
                 </div>
             </div>
@@ -436,8 +429,8 @@
         <div x-show="activeTab === 'dashboard-vivo'" class="space-y-6 animate-fadeIn" style="display: none;">
             <div class="text-center max-w-2xl mx-auto space-y-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Ubicación de referencia</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Mapa de ejemplo de Buenaventura</h2>
-                <p class="text-sm text-grafito">El mapa usa OpenStreetMap como fondo. Los círculos y cantidades son ilustrativos: no muestran personas ni vacantes registradas.</p>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Mapa de Buenaventura</h2>
+                <p class="text-sm text-grafito">Mapa base de OpenStreetMap. Aún no hay datos de vacantes ni personas conectados.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -463,13 +456,13 @@
                 </div>
             </div>
 
-            <!-- Mapa de referencia de OpenStreetMap con datos demostrativos -->
+            <!-- Mapa base de OpenStreetMap; no hay vacantes conectadas -->
             <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
                 <div class="flex items-center justify-between border-b border-gray-100 pb-4">
                     <h3 class="font-extrabold text-azulProfundo text-lg flex items-center">
-                        <i class="bi bi-pin-map-fill text-tealPortuario mr-2"></i> Zonas de referencia - Comunas 5, 7, 10 y 12
+                        <i class="bi bi-pin-map-fill text-tealPortuario mr-2"></i> Ubicación
                     </h3>
-                    <span class="text-xs bg-amber-100 text-amber-900 px-3 py-1 rounded-full font-bold">Datos de muestra; no es en vivo</span>
+                    <span class="text-xs bg-amber-100 text-amber-900 px-3 py-1 rounded-full font-bold">Sin vacantes conectadas</span>
                 </div>
                 
                 <div id="map"></div>
@@ -481,7 +474,7 @@
             <div class="text-center max-w-2xl mx-auto space-y-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-terracota bg-terracota/10 px-3 py-1 rounded-full">Reconocer lo que sabes hacer</span>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Insignias por trabajos y tareas realizadas</h2>
-                <p class="text-sm text-grafito">Propuesta para reconocer experiencia demostrada en tareas reales. Las insignias de esta página son ejemplos y aún no están validadas.</p>
+                <p class="text-sm text-grafito">Propuesta para reconocer experiencia demostrada. Aún no hay insignias verificadas.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
@@ -491,12 +484,12 @@
                             <i class="bi bi-award-fill"></i>
                         </div>
                         <div>
-                            <span class="text-xs font-bold text-terracota uppercase">Ejemplo de insignia propuesta</span>
+                            <span class="text-xs font-bold text-terracota uppercase">Insignia propuesta, pendiente de validación</span>
                             <h3 class="text-xl font-extrabold text-azulProfundo">Auxiliar de Refrigeración Naval</h3>
                         </div>
                     </div>
                     <p class="text-sm text-grafito leading-relaxed">
-                        Podría entregarse después de completar una tarea y recibir confirmación del empleador. Este ejemplo todavía no corresponde a una experiencia comprobada.
+                        Podría entregarse después de completar una tarea y recibir confirmación del empleador. Esta insignia no acredita una experiencia comprobada.
                     </p>
                     <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
                         <span class="text-xs font-semibold text-grafito">Validación con un empleador: pendiente</span>
@@ -509,7 +502,7 @@
                         <i class="bi bi-book-half text-tealPortuario mr-2"></i> Aprendizaje corto en el barrio
                     </h3>
                     <p class="text-sm text-grafito leading-relaxed">
-                        Si se confirma una necesidad de trabajo, se podrían ofrecer cursos cortos y apoyos de cuidado. El auxilio de $140.000 COP es un ejemplo tentativo, no un monto aprobado.
+                        Si se confirma una necesidad de trabajo, se podrían ofrecer cursos cortos y apoyos de cuidado. No hay un monto de apoyo aprobado.
                     </p>
                     <div class="p-4 rounded-2xl bg-tealPortuario/5 border border-tealPortuario/20 text-xs text-azulProfundo font-semibold">
                         <i class="bi bi-lightbulb-fill text-tealPortuario mr-1"></i> Idea por validar con quienes buscan y ofrecen trabajo.
@@ -530,11 +523,14 @@
                 <!-- Verificación de Empresas y Alertas -->
                 <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
                     <h3 class="font-extrabold text-azulProfundo text-base flex items-center">
-                        <i class="bi bi-shield-check text-tealPortuario mr-2 text-xl"></i> Ejemplo de revisión de ofertas
+                        <i class="bi bi-shield-check text-tealPortuario mr-2 text-xl"></i> Revisión de ofertas
                     </h3>
-                    <p class="text-xs text-grafito">Los nombres y estados que aparecen aquí son de muestra; no representan una verificación real.</p>
+                    <p class="text-xs text-grafito">La plataforma aún no verifica negocios ni recibe reportes reales.</p>
 
                     <div class="space-y-3">
+                        <template x-if="safetyAlerts.length === 0">
+                            <p class="rounded-xl bg-gray-50 p-4 text-sm text-grafito">No hay negocios ni ofertas verificadas en la plataforma.</p>
+                        </template>
                         <template x-for="alert in safetyAlerts" :key="alert.id">
                             <div class="p-3 rounded-2xl bg-gray-50 border border-gray-200 flex items-center justify-between text-xs">
                                 <div>
@@ -570,7 +566,7 @@
             <div class="text-center max-w-2xl mx-auto space-y-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Propuesta por revisar</span>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Cómo podría sostenerse el proyecto</h2>
-                <p class="text-sm text-grafito">Montos tentativos para conversar; falta cotizar y confirmar.</p>
+                <p class="text-sm text-grafito">No hay ingresos, precios ni presupuesto confirmados.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
@@ -579,9 +575,9 @@
                         <div class="w-10 h-10 rounded-xl bg-tealPortuario/10 text-tealPortuario flex items-center justify-center text-xl mb-4"><i class="bi bi-cash-stack"></i></div>
                         <h3 class="text-lg font-bold text-azulProfundo">Posibles fuentes de ingreso</h3>
                         <ul class="text-sm text-grafito mt-3 space-y-2">
-                            <li><strong class="text-azulProfundo">Entidad pública:</strong> $4.000.000/mes por entidad.</li>
-                            <li><strong class="text-azulProfundo">Negocio o taller:</strong> $80.000/mes.</li>
-                            <li><span class="text-tealPortuario font-bold">Personas que buscan empleo: gratis.</span></li>
+                            <li><strong class="text-azulProfundo">Entidad pública:</strong> sin contratos registrados.</li>
+                            <li><strong class="text-azulProfundo">Negocio o taller:</strong> sin acuerdos registrados.</li>
+                            <li><strong class="text-azulProfundo">Tarifa para personas:</strong> por definir.</li>
                         </ul>
                     </div>
                 </div>
@@ -589,15 +585,11 @@
                 <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between">
                     <div>
                         <div class="w-10 h-10 rounded-xl bg-terracota/10 text-terracota flex items-center justify-center text-xl mb-4"><i class="bi bi-calculator"></i></div>
-                        <h3 class="text-lg font-bold text-azulProfundo">Costos estimados por cotizar</h3>
+                        <h3 class="text-lg font-bold text-azulProfundo">Costos por definir</h3>
                         <ul class="text-sm text-grafito mt-3 space-y-3">
                             <li class="flex justify-between items-center border-b border-gray-100 pb-2">
                                 <span class="text-grafito">Atención por persona:</span>
                                 <span class="font-extrabold text-azulProfundo">Por cotizar</span>
-                            </li>
-                            <li class="flex justify-between items-center border-b border-gray-100 pb-2">
-                                <span class="text-grafito">Apoyo de movilidad:</span>
-                                <span class="font-extrabold text-tealPortuario">$140.000/mes*</span>
                             </li>
                             <li class="flex justify-between items-center">
                                 <span class="text-grafito">Beneficio social:</span>
@@ -610,26 +602,16 @@
                 <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between bg-gradient-to-br from-tealPortuario/5 to-white">
                     <div>
                         <div class="w-10 h-10 rounded-xl bg-tealPortuario text-white flex items-center justify-center text-xl mb-4"><i class="bi bi-rocket-takeoff"></i></div>
-                        <h3 class="text-lg font-bold text-azulProfundo">Presupuesto piloto tentativo</h3>
-                        <div class="mt-4 rounded-2xl bg-tealPortuario/5 p-4">
-                            <div class="text-xs font-semibold uppercase tracking-wide text-grafito">Escenario de 9 meses</div>
-                            <div class="mt-1 text-2xl font-extrabold text-tealPortuario">$120.000.000 COP</div>
-                        </div>
-                        <ul class="mt-4 space-y-2 text-sm text-grafito">
-                            <li class="flex justify-between gap-3"><span>Producto (40%)</span><strong class="text-azulProfundo">$48 M</strong></li>
-                            <li class="flex justify-between gap-3"><span>Trabajo en territorio (25%)</span><strong class="text-azulProfundo">$30 M</strong></li>
-                            <li class="flex justify-between gap-3"><span>Alianzas y formación (20%)</span><strong class="text-azulProfundo">$24 M</strong></li>
-                            <li class="flex justify-between gap-3"><span>Legal y datos (15%)</span><strong class="text-azulProfundo">$18 M</strong></li>
-                        </ul>
+                        <h3 class="text-lg font-bold text-azulProfundo">Presupuesto</h3>
+                        <p class="mt-4 text-sm text-grafito">No hay un presupuesto aprobado ni cotizaciones publicadas para este proyecto.</p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-gray-200 text-xs font-bold text-tealPortuario flex items-center justify-between">
-                        <span>Escenario por validar</span>
-                        <span class="bg-tealPortuario text-white px-2 py-1 rounded">*Apoyo tentativo</span>
+                        <span>Sin financiación confirmada</span>
                     </div>
                 </div>
             </div>
 
-            <p class="text-center text-xs text-grafito">Valores de referencia para conversar; falta validar con cotizaciones y posibles aliados.</p>
+            <p class="text-center text-xs text-grafito">No se muestran precios ni presupuestos inventados. Las cifras se publicarán cuando estén respaldadas por acuerdos y cotizaciones.</p>
         </div>
 
     </main>
