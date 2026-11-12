@@ -94,7 +94,7 @@
             <div class="flex items-start gap-3">
                 <i class="bi bi-info-circle-fill mt-0.5 text-terracota" aria-hidden="true"></i>
                 <p class="mb-0 leading-relaxed">
-                    <strong>Datos disponibles:</strong> la población corresponde al Censo Nacional de Población y Vivienda 2018 del DANE (último conteo censal disponible), no a un dato en tiempo real. Los perfiles son ficticios. PULSO aún no consulta vacantes ni tiene registros de empleos, usuarios, ingresos o presupuesto.
+                    <strong>Alcance de los datos:</strong> la población corresponde al Censo Nacional de Población y Vivienda 2018 del DANE, no a un dato en tiempo real. Los perfiles y las opciones laborales son ejemplos ficticios para esta demostración: no son usuarios registrados ni vacantes reales o verificadas.
                 </p>
             </div>
         </div>
@@ -154,6 +154,75 @@
                     </div>
                 </div>
             </div>
+
+            <section class="card-glass rounded-3xl p-6 sm:p-8 space-y-6" aria-labelledby="employment-analytics-title">
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario">Analítica de demostración</span>
+                        <h2 id="employment-analytics-title" class="mt-1 text-2xl font-extrabold text-azulProfundo">Perfiles y opciones laborales</h2>
+                    </div>
+                    <span class="w-fit rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-900">Ejemplos ficticios · no son vacantes</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+                    <div class="rounded-2xl bg-white/80 p-5">
+                        <div class="text-sm font-semibold text-grafito">Perfiles de ejemplo</div>
+                        <div class="mt-1 text-3xl font-extrabold text-azulProfundo" x-text="employmentAnalytics.profileCount"></div>
+                    </div>
+                    <div class="rounded-2xl bg-white/80 p-5">
+                        <div class="text-sm font-semibold text-grafito">Opciones sugeridas</div>
+                        <div class="mt-1 text-3xl font-extrabold text-tealPortuario" x-text="employmentAnalytics.suggestionCount"></div>
+                    </div>
+                    <div class="rounded-2xl bg-white/80 p-5">
+                        <div class="text-sm font-semibold text-grafito">Opciones por perfil</div>
+                        <div class="mt-1 text-3xl font-extrabold text-terracota" x-text="employmentAnalytics.profiles.length ? Math.min(...employmentAnalytics.profiles.map(profile => profile.count)) + '–' + Math.max(...employmentAnalytics.profiles.map(profile => profile.count)) : '0'"></div>
+                        <div class="text-xs text-grafito">mínimo–máximo</div>
+                    </div>
+                    <div class="rounded-2xl bg-white/80 p-5">
+                        <div class="text-sm font-semibold text-grafito">Áreas sugeridas</div>
+                        <div class="mt-1 text-3xl font-extrabold text-azulProfundo" x-text="employmentAnalytics.areas.length"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                    <div class="rounded-2xl bg-white/80 p-5">
+                        <h3 class="font-bold text-azulProfundo">Opciones por perfil</h3>
+                        <p class="mb-5 mt-1 text-xs text-grafito">Cantidad de sugerencias ficticias asociadas a cada perfil.</p>
+                        <div class="space-y-4">
+                            <template x-for="profile in employmentAnalytics.profiles" :key="profile.userId">
+                                <div>
+                                    <div class="mb-1 flex justify-between gap-3 text-sm">
+                                        <span class="font-semibold text-azulProfundo" x-text="profile.name"></span>
+                                        <span class="text-grafito" x-text="profile.count"></span>
+                                    </div>
+                                    <div class="h-2.5 overflow-hidden rounded-full bg-gray-100" aria-hidden="true">
+                                        <div class="h-full rounded-full bg-tealPortuario" :style="'width: ' + (profile.count / employmentAnalytics.maxProfileCount * 100) + '%'"></div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl bg-white/80 p-5">
+                        <h3 class="font-bold text-azulProfundo">Distribución por área</h3>
+                        <p class="mb-5 mt-1 text-xs text-grafito">Clasificación de las opciones de referencia incluidas en la demo.</p>
+                        <div class="space-y-4">
+                            <template x-for="area in employmentAnalytics.areas" :key="area.name">
+                                <div>
+                                    <div class="mb-1 flex justify-between gap-3 text-sm">
+                                        <span class="font-semibold text-azulProfundo" x-text="area.name"></span>
+                                        <span class="text-grafito" x-text="area.count"></span>
+                                    </div>
+                                    <div class="h-2.5 overflow-hidden rounded-full bg-gray-100" aria-hidden="true">
+                                        <div class="h-full rounded-full bg-terracota" :style="'width: ' + (area.count / employmentAnalytics.maxAreaCount * 100) + '%'"></div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+                <p class="border-t border-gray-100 pt-4 text-xs leading-relaxed text-grafito">Las cifras se calculan desde las tres fichas ficticias y sus opciones de orientación incluidas en esta página. No representan actividad, demanda laboral ni resultados reales de PULSO.</p>
+            </section>
 
             <section class="card-glass rounded-3xl p-6 sm:p-8 space-y-6" aria-labelledby="population-title">
                 <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
@@ -221,8 +290,12 @@
                             <h3 class="text-lg font-bold text-azulProfundo mt-1">Pepito (Comuna 12)</h3>
                             <p class="text-sm text-grafito mt-3 leading-relaxed">Sabe reparar celulares y manejar redes, aprende rápido. Le cuesta mostrar lo que sabe porque no tiene experiencia formal.</p>
                             <div class="mt-4 rounded-2xl bg-tealPortuario/5 p-4">
-                                <span class="text-xs font-bold uppercase tracking-wide text-tealPortuario">Área laboral sugerida</span>
-                                <p class="mt-1 font-bold text-azulProfundo">Soporte digital barrial</p>
+                                <span class="text-xs font-bold uppercase tracking-wide text-tealPortuario">3 opciones de orientación · no son vacantes</span>
+                                <ul class="mt-2 space-y-2 text-sm font-semibold text-azulProfundo">
+                                    <template x-for="suggestion in jobSuggestions.filter(item => item.userId === 'pepito')" :key="suggestion.title">
+                                        <li class="flex items-start gap-2"><i class="bi bi-arrow-up-right-circle mt-0.5 text-tealPortuario" aria-hidden="true"></i><span x-text="suggestion.title"></span></li>
+                                    </template>
+                                </ul>
                             </div>
                         </div>
                         <div class="mt-4 pt-4 border-t border-gray-100 text-xs text-tealPortuario font-semibold flex items-center"><i class="bi bi-info-circle mr-1"></i> Vacantes no consultadas</div>
@@ -235,8 +308,12 @@
                             <h3 class="text-lg font-bold text-azulProfundo mt-1">Marta (Comuna 7)</h3>
                             <p class="text-sm text-grafito mt-3 leading-relaxed">Cocina para eventos y administra negocio de barrio. Su hoja de vida no lo refleja y sus horarios dependen del cuidado de sus hijos.</p>
                             <div class="mt-4 rounded-2xl bg-terracota/5 p-4">
-                                <span class="text-xs font-bold uppercase tracking-wide text-terracota">Área laboral sugerida</span>
-                                <p class="mt-1 font-bold text-azulProfundo">Auxiliar de cocina y logística</p>
+                                <span class="text-xs font-bold uppercase tracking-wide text-terracota">3 opciones de orientación · no son vacantes</span>
+                                <ul class="mt-2 space-y-2 text-sm font-semibold text-azulProfundo">
+                                    <template x-for="suggestion in jobSuggestions.filter(item => item.userId === 'marta')" :key="suggestion.title">
+                                        <li class="flex items-start gap-2"><i class="bi bi-arrow-up-right-circle mt-0.5 text-terracota" aria-hidden="true"></i><span x-text="suggestion.title"></span></li>
+                                    </template>
+                                </ul>
                             </div>
                         </div>
                         <div class="mt-4 pt-4 border-t border-gray-100 text-xs text-terracota font-semibold flex items-center"><i class="bi bi-check-circle mr-1"></i> Horario y apoyo de cuidado por acordar</div>
@@ -249,8 +326,12 @@
                             <h3 class="text-lg font-bold text-azulProfundo mt-1">Camila (Comuna 5)</h3>
                             <p class="text-sm text-grafito mt-3 leading-relaxed">Tiene habilidades de diseño y atención por chat. Necesita que las herramientas sean accesibles y cuenten con los apoyos adecuados.</p>
                             <div class="mt-4 rounded-2xl bg-azulProfundo/5 p-4">
-                                <span class="text-xs font-bold uppercase tracking-wide text-azulProfundo">Área laboral sugerida</span>
-                                <p class="mt-1 font-bold text-azulProfundo">Gestora de canales digitales inclusivos</p>
+                                <span class="text-xs font-bold uppercase tracking-wide text-azulProfundo">3 opciones de orientación · no son vacantes</span>
+                                <ul class="mt-2 space-y-2 text-sm font-semibold text-azulProfundo">
+                                    <template x-for="suggestion in jobSuggestions.filter(item => item.userId === 'camila')" :key="suggestion.title">
+                                        <li class="flex items-start gap-2"><i class="bi bi-arrow-up-right-circle mt-0.5 text-azulProfundo" aria-hidden="true"></i><span x-text="suggestion.title"></span></li>
+                                    </template>
+                                </ul>
                             </div>
                         </div>
                         <div class="mt-4 pt-4 border-t border-gray-100 text-xs text-azulProfundo font-semibold flex items-center"><i class="bi bi-check-circle mr-1"></i> Accesibilidad y modalidad por acordar</div>
