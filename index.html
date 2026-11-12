@@ -94,7 +94,7 @@
             <div class="flex items-start gap-3">
                 <i class="bi bi-info-circle-fill mt-0.5 text-terracota" aria-hidden="true"></i>
                 <p class="mb-0 leading-relaxed">
-                    <strong>Datos disponibles:</strong> la población 2026 es una proyección oficial del DANE, no un conteo en tiempo real. Los perfiles son ficticios. PULSO aún no consulta vacantes ni tiene registros de empleos, usuarios, ingresos o presupuesto.
+                    <strong>Datos disponibles:</strong> la población corresponde al Censo Nacional de Población y Vivienda 2018 del DANE (último conteo censal disponible), no a un dato en tiempo real. Los perfiles son ficticios. PULSO aún no consulta vacantes ni tiene registros de empleos, usuarios, ingresos o presupuesto.
                 </p>
             </div>
         </div>
@@ -159,83 +159,49 @@
                 <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                     <div>
                         <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario">Buenaventura en cifras</span>
-                        <h2 id="population-title" class="mt-1 text-2xl font-extrabold text-azulProfundo">La población sigue creciendo</h2>
+                        <h2 id="population-title" class="mt-1 text-2xl font-extrabold text-azulProfundo">Población del último censo oficial</h2>
                     </div>
-                    <span class="w-fit rounded-full bg-tealPortuario/10 px-3 py-1 text-xs font-bold text-tealPortuario">Proyección DANE 2026</span>
+                    <span class="w-fit rounded-full bg-tealPortuario/10 px-3 py-1 text-xs font-bold text-tealPortuario">Censo DANE 2018</span>
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     <div class="rounded-2xl bg-white/80 p-5">
-                        <div class="text-sm font-semibold text-grafito">Población total</div>
-                        <div class="mt-1 text-3xl font-extrabold text-azulProfundo">335.217</div>
-                        <div class="text-xs text-grafito">personas proyectadas para 2026</div>
+                        <div class="text-sm font-semibold text-grafito">Población total censada</div>
+                        <div class="mt-1 text-3xl font-extrabold text-azulProfundo">308.188</div>
+                        <div class="text-xs text-grafito">personas, ajustadas por cobertura</div>
                     </div>
                     <div class="rounded-2xl bg-white/80 p-5">
                         <div class="text-sm font-semibold text-grafito">En la cabecera municipal</div>
-                        <div class="mt-1 text-3xl font-extrabold text-tealPortuario">262.320</div>
-                        <div class="text-xs text-grafito">78,3% de la población proyectada</div>
+                        <div class="mt-1 text-3xl font-extrabold text-tealPortuario">235.064</div>
+                        <div class="text-xs text-grafito">76,3% de la población censada</div>
                     </div>
                     <div class="rounded-2xl bg-white/80 p-5">
-                        <div class="text-sm font-semibold text-grafito">En centros poblados y zona rural</div>
-                        <div class="mt-1 text-3xl font-extrabold text-terracota">72.897</div>
-                        <div class="text-xs text-grafito">21,7% de la población proyectada</div>
+                        <div class="text-sm font-semibold text-grafito">En centros poblados y rural disperso</div>
+                        <div class="mt-1 text-3xl font-extrabold text-terracota">73.124</div>
+                        <div class="text-xs text-grafito">23,7% de la población censada</div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 items-center gap-6 lg:grid-cols-5">
                     <div class="lg:col-span-3">
-                        <h3 class="text-sm font-bold text-azulProfundo">Población total proyectada, 2018–2026</h3>
-                        <p class="mb-2 text-xs text-grafito">Estimaciones anuales del DANE, en número de personas.</p>
-                        <div class="overflow-x-auto">
-                            <svg viewBox="0 0 640 230" role="img" aria-labelledby="population-chart-title population-chart-desc" class="w-full min-w-[560px]">
-                                <title id="population-chart-title">Población proyectada de Buenaventura entre 2018 y 2026</title>
-                                <desc id="population-chart-desc">La proyección sube de 308.193 personas en 2018 a 335.217 en 2026.</desc>
-                                <line x1="52" y1="35" x2="610" y2="35" stroke="#dce8e7" stroke-width="1"/>
-                                <line x1="52" y1="105" x2="610" y2="105" stroke="#dce8e7" stroke-width="1"/>
-                                <line x1="52" y1="175" x2="610" y2="175" stroke="#dce8e7" stroke-width="1"/>
-                                <text x="4" y="39" fill="#52666d" font-size="12">340 mil</text>
-                                <text x="4" y="109" fill="#52666d" font-size="12">320 mil</text>
-                                <text x="4" y="179" fill="#52666d" font-size="12">300 mil</text>
-                                <polyline points="60,146 127,135 195,122 262,110 330,99 397,88 465,76 532,64 600,52" fill="none" stroke="#087f75" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                                <circle cx="60" cy="146" r="4" fill="#087f75"/>
-                                <circle cx="127" cy="135" r="4" fill="#087f75"/>
-                                <circle cx="195" cy="122" r="4" fill="#087f75"/>
-                                <circle cx="262" cy="110" r="4" fill="#087f75"/>
-                                <circle cx="330" cy="99" r="4" fill="#087f75"/>
-                                <circle cx="397" cy="88" r="4" fill="#087f75"/>
-                                <circle cx="465" cy="76" r="4" fill="#087f75"/>
-                                <circle cx="532" cy="64" r="4" fill="#087f75"/>
-                                <circle cx="600" cy="52" r="6" fill="#a36700"/>
-                                <text x="54" y="201" fill="#52666d" font-size="11">2018</text>
-                                <text x="121" y="201" fill="#52666d" font-size="11">2019</text>
-                                <text x="189" y="201" fill="#52666d" font-size="11">2020</text>
-                                <text x="256" y="201" fill="#52666d" font-size="11">2021</text>
-                                <text x="324" y="201" fill="#52666d" font-size="11">2022</text>
-                                <text x="391" y="201" fill="#52666d" font-size="11">2023</text>
-                                <text x="459" y="201" fill="#52666d" font-size="11">2024</text>
-                                <text x="526" y="201" fill="#52666d" font-size="11">2025</text>
-                                <text x="594" y="201" fill="#52666d" font-size="11">2026</text>
-                            </svg>
+                        <h3 class="text-sm font-bold text-azulProfundo">Distribución de la población censada, 2018</h3>
+                        <p class="mb-4 text-xs text-grafito">Porcentaje de personas según área de residencia.</p>
+                        <div class="h-5 overflow-hidden rounded-full bg-amber-100" role="img" aria-label="Distribución censal de 2018: 76,3% en cabecera municipal y 23,7% en centros poblados y rural disperso">
+                            <div class="h-full rounded-full bg-tealPortuario" style="width: 76.3%"></div>
+                        </div>
+                        <div class="mt-3 flex flex-wrap justify-between gap-2 text-xs text-grafito">
+                            <span>76,3% cabecera municipal</span>
+                            <span>23,7% centros poblados y rural disperso</span>
                         </div>
                     </div>
                     <div class="rounded-2xl bg-tealPortuario/5 p-5 lg:col-span-2">
-                        <div class="flex items-center justify-between gap-3">
-                            <span class="text-sm font-bold text-azulProfundo">Cambio proyectado desde 2018</span>
-                            <span class="text-2xl font-extrabold text-tealPortuario">+8,8%</span>
-                        </div>
-                        <div class="mt-4 h-3 overflow-hidden rounded-full bg-amber-100" role="img" aria-label="Distribución de población proyectada: 78,3% cabecera municipal y 21,7% centros poblados y zona rural">
-                            <div class="h-full rounded-full bg-tealPortuario" style="width: 78.3%"></div>
-                        </div>
-                        <div class="mt-2 flex justify-between text-xs text-grafito">
-                            <span>78,3% cabecera</span>
-                            <span>21,7% rural y centros poblados</span>
-                        </div>
+                        <div class="text-sm font-bold text-azulProfundo">Un dato observado, no una proyección</div>
+                        <p class="mt-2 text-sm leading-relaxed text-grafito">El último conteo censal oficial disponible para el municipio es de 2018. No se muestran estimaciones posteriores como si fueran conteos actuales.</p>
                     </div>
                 </div>
 
                 <p class="border-t border-gray-100 pt-4 text-xs leading-relaxed text-grafito">
-                    Fuente: <a class="font-semibold text-tealPortuario underline" href="https://www.dane.gov.co/files/censo2018/proyecciones-de-poblacion/Municipal/PPED-AreaMun-2018-2042_VP.xlsx" target="_blank" rel="noopener noreferrer">DANE, proyecciones municipales de población 2018–2042 por área geográfica</a>.
-                    La cifra de 2026 es una proyección estadística, no un conteo en tiempo real ni datos de usuarios, empleos o resultados de PULSO.
+                    Fuente: <a class="font-semibold text-tealPortuario underline" href="https://sitios.dane.gov.co/cnpv/app/views/informacion/fichas/76109.pdf" target="_blank" rel="noopener noreferrer">DANE, Censo Nacional de Población y Vivienda 2018, ficha municipal de Buenaventura</a> y <a class="font-semibold text-tealPortuario underline" href="https://www.buenaventura.gov.co/images/multimedia/20201228_anuario_estadistico_2014___2018.pdf" target="_blank" rel="noopener noreferrer">Anuario Estadístico de Buenaventura 2014–2018</a>. Población censal ajustada por cobertura. Estos datos no representan empleos, usuarios ni resultados de PULSO.
                 </p>
             </section>
 
@@ -436,23 +402,23 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div class="card-glass p-6 rounded-3xl shadow-sm space-y-2 border-l-4 border-tealPortuario">
                     <div class="text-xs font-bold text-grafito uppercase">Población total</div>
-                    <div class="text-3xl font-extrabold text-azulProfundo">335.217</div>
-                    <div class="text-xs text-tealPortuario font-semibold">Proyección DANE para 2026</div>
+                    <div class="text-3xl font-extrabold text-azulProfundo">308.188</div>
+                    <div class="text-xs text-tealPortuario font-semibold">Censo DANE 2018, ajustado por cobertura</div>
                 </div>
                 <div class="card-glass p-6 rounded-3xl shadow-sm space-y-2 border-l-4 border-terracota">
                     <div class="text-xs font-bold text-grafito uppercase">Cabecera municipal</div>
-                    <div class="text-3xl font-extrabold text-azulProfundo">262.320</div>
-                    <div class="text-xs text-terracota font-semibold">Proyección DANE para 2026</div>
+                    <div class="text-3xl font-extrabold text-azulProfundo">235.064</div>
+                    <div class="text-xs text-terracota font-semibold">Censo DANE 2018, cabecera municipal</div>
                 </div>
                 <div class="card-glass p-6 rounded-3xl shadow-sm space-y-2 border-l-4 border-tealPortuario">
                     <div class="text-xs font-bold text-grafito uppercase">Rural y centros poblados</div>
-                    <div class="text-3xl font-extrabold text-azulProfundo">72.897</div>
-                    <div class="text-xs text-grafito">Proyección DANE para 2026</div>
+                    <div class="text-3xl font-extrabold text-azulProfundo">73.124</div>
+                    <div class="text-xs text-grafito">Censo DANE 2018, rural y centros poblados</div>
                 </div>
                 <div class="card-glass p-6 rounded-3xl shadow-sm space-y-2 border-l-4 border-azulProfundo">
-                    <div class="text-3xl font-extrabold text-azulProfundo">+8,8%</div>
-                    <div class="text-xs font-bold text-grafito uppercase">Cambio proyectado desde 2018</div>
-                    <div class="text-xs text-grafito">Cálculo con proyecciones DANE 2018 y 2026</div>
+                    <div class="text-3xl font-extrabold text-azulProfundo">76,3%</div>
+                    <div class="text-xs font-bold text-grafito uppercase">Población en cabecera</div>
+                    <div class="text-xs text-grafito">Proporción calculada con el Censo DANE 2018</div>
                 </div>
             </div>
 
