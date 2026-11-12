@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PULSO: Plataforma de Inteligencia Cívica y Empleo - Buenaventura</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Leaflet CSS for OpenStreetMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tealPortuario: '#00685f',
+                        tealHover: '#0d9488',
+                        terracota: '#a36700',
+                        terracotaLight: '#ffb95f',
+                        bgInsti: '#f8f9ff',
+                        azulProfundo: '#0b1c30',
+                        grafito: '#3d4947'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8f9ff;
+            color: #0b1c30;
+        }
+        .card-glass {
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid #e5eeff;
+        }
+        #map {
+            height: 420px;
+            width: 100%;
+            border-radius: 1.5rem;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col justify-between selection:bg-tealPortuario selection:text-white" 
+      x-data="{ 
+          activeTab: 'dashboard',
+          selectedUser: 'pepito',
+          usersData: {
+              pepito: { name: 'Pepito (21 años, Comuna 12)', role: 'Joven &bull; Repuesto y Celulares', audioText: '🎵 [Nota de voz] Hola, sé reparar celulares, manejar redes y aprender rápido. Busco mi primera oportunidad sin experiencia formal.', matchScore: '94%', company: 'Comercializadora El Puerto (Comuna 7)', roleMatch: 'Soporte Digital Barrial', stipend: '$150.000 COP + Conectividad' },
+              marta: { name: 'Marta (Madre Cabeza de Hogar, Comuna 7)', role: 'Gastronomía & Cuidados', audioText: '🎵 [Nota de voz] Cocino para eventos masivos y administro negocios. Mis horarios dependen del cuidado de mis hijos.', matchScore: '92%', company: 'Restaurante Mar y Sabor (Comuna 10)', roleMatch: 'Auxiliar de Cocina & Logística', stipend: '$140.000 COP + Ludoteca Inclusiva' },
+              camila: { name: 'Camila (Persona con Discapacidad, Comuna 5)', role: 'Diseño & Atención Chat', audioText: '🎵 [Nota de voz] Tengo habilidades de diseño y atención al cliente por chat. Requiero ajustes razonables de accesibilidad.', matchScore: '95%', company: 'Logística Pacífico S.A. (Comuna 5)', roleMatch: 'Gestora de Canales Digitales Inclusivos', stipend: 'Modalidad Remota + Ajustes Ley 1618' }
+          },
+          waStep: 0,
+          waMessages: [],
+          matchResult: null,
+          
+          initSimulator() {
+              this.resetWa();
+          },
+          sendAudioNote() {
+              const current = this.usersData[this.selectedUser];
+              this.waMessages.push({ sender: 'user', text: current.audioText });
+              this.waStep = 1;
+              setTimeout(() => {
+                  this.waMessages.push({ sender: 'bot', text: '✅ ¡Perfil extraído con éxito por IA! Sin hojas de vida. Detectamos tus destrezas y tus condiciones de horario/apoyo. ¿Confirmamos disponibilidad en tu comuna?' });
+              }, 1000);
+          },
+          confirmMatch() {
+              const current = this.usersData[this.selectedUser];
+              this.waMessages.push({ sender: 'user', text: '👍 Sí, confirmo disponibilidad y condiciones.' });
+              this.waStep = 2;
+              setTimeout(() => {
+                  this.waMessages.push({ sender: 'bot', text: '🎉 ¡MATCH EXPLICABLE EXITOSO (' + current.matchScore + ' Afinidad)! Empresa verif.: ' + current.company + '. Oportunidad: ' + current.roleMatch + '. Beneficio: ' + current.stipend + '.' });
+                  this.matchResult = { score: current.matchScore, company: current.company, role: current.roleMatch, stipend: current.stipend };
+              }, 1200);
+          },
+          resetWa() {
+              this.waStep = 0;
+              this.matchResult = null;
+              this.waMessages = [
+                  { sender: 'bot', text: '¡Hola! Bienvenido a PULSO Buenaventura 🌊. Conectamos tus capacidades reales con empleos y encargos sin hoja de vida. Estás simulando a: ' + this.usersData[this.selectedUser].name + '. ¿Cómo prefieres registrarte?' }
+              ];
+          },
+          
+          initMap() {
+              setTimeout(() => {
+                  if(window.mapInitialized) return;
+                  let map = L.map('map').setView([3.8801, -77.0312], 13);
+                  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      maxZoom: 19,
+                      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &bull; PULSO Cívico'
+                  }).addTo(map);
+
+                  let comunas = [
+                      { name: 'Comuna 10 (Foco Actual)', lat: 3.8750, lon: -77.0280, vacancies: 34, talent: 450, color: '#00685f' },
+                      { name: 'Comuna 12 (Talleres)', lat: 3.8680, lon: -77.0400, vacancies: 16, talent: 240, color: '#a36700' },
+                      { name: 'Comuna 7 (Comercio)', lat: 3.8850, lon: -77.0200, vacancies: 22, talent: 240, color: '#00685f' },
+                      { name: 'Comuna 5 (Logística)', lat: 3.8920, lon: -77.0150, vacancies: 14, talent: 310, color: '#00685f' }
+                  ];
+
+                  comunas.forEach(c => {
+                      let circle = L.circle([c.lat, c.lon], {
+                          color: c.color,
+                          fillColor: c.color,
+                          fillOpacity: 0.5,
+                          radius: 450
+                      }).addTo(map);
+                      circle.bindPopup('<b>' + c.name + '</b><br>Vacantes activas: ' + c.vacancies + '<br>Talento disponible: ' + c.talent);
+                  });
+                  window.mapInitialized = true;
+              }, 300);
+          },
+
+          safetyAlerts: [
+              { id: 1, title: 'Taller Don Amador (Comuna 10)', status: 'Verificado (NIT & Inspección física)', color: 'text-tealPortuario' },
+              { id: 2, title: 'Comercializadora Pacífico (Comuna 7)', status: 'Verificado & Con aval comunitario', color: 'text-tealPortuario' },
+              { id: 3, title: 'Alerta Reportada: Oferta dudosa sin NIT', status: 'Bloqueada por moderación PULSO', color: 'text-red-600' }
+          ],
+          reportSent: false
+      }">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b border-blue-100 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" @click="activeTab = 'dashboard'">
+                <div class="bg-tealPortuario text-white p-2.5 rounded-xl flex items-center justify-center shadow-md">
+                    <i class="bi bi-activity text-lg"></i>
+                </div>
+                <div>
+                    <span class="font-extrabold text-xl tracking-tight text-azulProfundo">PULSO</span>
+                    <span class="text-xs uppercase tracking-wider bg-tealPortuario/10 text-tealPortuario px-2 py-0.5 rounded-full font-semibold ml-2">Buenaventura</span>
+                </div>
+            </div>
+
+            <!-- Tab Navigation Links -->
+            <nav class="hidden lg:flex items-center space-x-1">
+                <button @click="activeTab = 'dashboard'" :class="activeTab === 'dashboard' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
+                    <i class="bi bi-grid-1x2"></i><span>Resumen Tesis</span>
+                </button>
+                <button @click="activeTab = 'whatsapp'; initSimulator();" :class="activeTab === 'whatsapp' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
+                    <i class="bi bi-whatsapp"></i><span>Simulador Multi-Usuario AI</span>
+                </button>
+                <button @click="activeTab = 'dashboard-vivo'; initMap();" :class="activeTab === 'dashboard-vivo' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
+                    <i class="bi bi-map"></i><span>Mapa Vivo OSM (Tiempo Real)</span>
+                </button>
+                <button @click="activeTab = 'reputacion'" :class="activeTab === 'reputacion' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
+                    <i class="bi bi-award"></i><span>Micro-Credenciales</span>
+                </button>
+                <button @click="activeTab = 'inclusion'" :class="activeTab === 'inclusion' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
+                    <i class="bi bi-shield-heart"></i><span>Inclusión & Seguridad</span>
+                </button>
+                <button @click="activeTab = 'financials'" :class="activeTab === 'financials' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
+                    <i class="bi bi-graph-up-arrow"></i><span>Modelo & Inversión</span>
+                </button>
+            </nav>
+
+            <div class="flex items-center space-x-2">
+                <span class="text-xs bg-terracota/10 text-terracota font-bold px-3 py-1.5 rounded-full hidden sm:inline-block">
+                    Piloto Comunas 5, 7, 10 y 12
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Nav Bar (Bottom) -->
+    <div class="lg:hidden bg-white border-t border-blue-100 fixed bottom-0 left-0 right-0 z-50 px-2 py-2 flex justify-around shadow-lg">
+        <button @click="activeTab = 'dashboard'" :class="activeTab === 'dashboard' ? 'text-tealPortuario' : 'text-grafito'" class="flex flex-col items-center text-[10px] font-bold">
+            <i class="bi bi-grid-1x2 text-base"></i><span>Inicio</span>
+        </button>
+        <button @click="activeTab = 'whatsapp'; initSimulator();" :class="activeTab === 'whatsapp' ? 'text-tealPortuario' : 'text-grafito'" class="flex flex-col items-center text-[10px] font-bold">
+            <i class="bi bi-whatsapp text-base"></i><span>Bot WA</span>
+        </button>
+        <button @click="activeTab = 'dashboard-vivo'; initMap();" :class="activeTab === 'dashboard-vivo' ? 'text-tealPortuario' : 'text-grafito'" class="flex flex-col items-center text-[10px] font-bold">
+            <i class="bi bi-map text-base"></i><span>Mapa Vivo</span>
+        </button>
+        <button @click="activeTab = 'reputacion'" :class="activeTab === 'reputacion' ? 'text-tealPortuario' : 'text-grafito'" class="flex flex-col items-center text-[10px] font-bold">
+            <i class="bi bi-award text-base"></i><span>Insignias</span>
+        </button>
+        <button @click="activeTab = 'inclusion'" :class="activeTab === 'inclusion' ? 'text-tealPortuario' : 'text-grafito'" class="flex flex-col items-center text-[10px] font-bold">
+            <i class="bi bi-shield-heart text-base"></i><span>Seguridad</span>
+        </button>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full pb-24 lg:pb-8">
+
+        <!-- TAB 1: RESUMEN TESIS -->
+        <div x-show="activeTab === 'dashboard'" class="space-y-8 animate-fadeIn">
+            <div class="card-glass rounded-3xl p-8 sm:p-12 shadow-xl relative overflow-hidden">
+                <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-tealPortuario/5 blur-3xl pointer-events-none"></div>
+                
+                <div class="max-w-3xl space-y-6 relative z-10">
+                    <div class="inline-flex items-center space-x-2 bg-tealPortuario/10 text-tealPortuario px-4 py-1.5 rounded-full text-sm font-bold">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <span>Piloto Buenaventura (Valle del Cauca) &bull; Comunas 5, 7, 10 y 12</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl font-extrabold text-azulProfundo tracking-tight leading-tight">
+                        PULSO: Conexión Territorial de Capacidades y Empleo en Tiempo Real
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-grafito leading-relaxed">
+                        Sistema cívico en WhatsApp que recopila, integra y analiza en tiempo real lo que las personas saben hacer y lo que el territorio necesita, sin exigir hojas de vida.
+                    </p>
+
+                    <div class="pt-4 flex flex-wrap gap-4">
+                        <button @click="activeTab = 'whatsapp'; initSimulator();" class="bg-tealPortuario hover:bg-tealHover text-white px-6 py-3 rounded-xl font-bold shadow-lg transition flex items-center space-x-2">
+                            <i class="bi bi-whatsapp text-lg"></i>
+                            <span>Probar Simulador Multi-Usuario</span>
+                        </button>
+                        <button @click="activeTab = 'dashboard-vivo'; initMap();" class="bg-white border border-blue-200 hover:bg-gray-50 text-azulProfundo px-6 py-3 rounded-xl font-bold shadow-sm transition flex items-center space-x-2">
+                            <i class="bi bi-map text-tealPortuario text-lg"></i>
+                            <span>Abrir Mapa OSM en Tiempo Real</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-gray-100 grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-tealPortuario/10 text-tealPortuario flex items-center justify-center text-2xl font-bold">0</div>
+                        <div>
+                            <div class="text-xs font-semibold text-grafito uppercase">Hojas de Vida requeridas</div>
+                            <div class="text-sm font-bold text-azulProfundo">Inclusión directa por voz y texto</div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-terracota/10 text-terracota flex items-center justify-center text-xl font-bold">&lt;4m</div>
+                        <div>
+                            <div class="text-xs font-semibold text-grafito uppercase">Match Explicable y Trazable</div>
+                            <div class="text-sm font-bold text-azulProfundo">Conecta habilidad con necesidad</div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-tealPortuario/10 text-tealPortuario flex items-center justify-center text-2xl"><i class="bi bi-shield-check"></i></div>
+                        <div>
+                            <div class="text-xs font-semibold text-grafito uppercase">Diseño Inclusivo & Seguro</div>
+                            <div class="text-sm font-bold text-azulProfundo">Ley 1618 & Protección de Datos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Escenarios del problema -->
+            <div class="space-y-4">
+                <div class="text-center max-w-2xl mx-auto space-y-1">
+                    <span class="text-xs font-bold uppercase tracking-wider text-terracota bg-terracota/10 px-3 py-1 rounded-full">Casos Reales del Territorio</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Tres Personas, Un Mismo Problema de Asimetría</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                    <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-tealPortuario/10 text-tealPortuario flex items-center justify-center text-xl mb-4"><i class="bi bi-person-badge"></i></div>
+                            <span class="text-xs font-bold text-tealPortuario uppercase tracking-wider">Joven (21 años)</span>
+                            <h3 class="text-lg font-bold text-azulProfundo mt-1">Pepito (Comuna 12)</h3>
+                            <p class="text-sm text-grafito mt-3 leading-relaxed">Sabe reparar celulares y manejar redes, aprende rápido. No logra conectar sus habilidades porque no tiene experiencia formal.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-100 text-xs text-tealPortuario font-semibold flex items-center"><i class="bi bi-check-circle mr-1"></i> Perfil por Capacidades (Prueba en Bot)</div>
+                    </div>
+
+                    <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-terracota/10 text-terracota flex items-center justify-center text-xl mb-4"><i class="bi bi-house-heart"></i></div>
+                            <span class="text-xs font-bold text-terracota uppercase tracking-wider">Madre Cabeza de Hogar</span>
+                            <h3 class="text-lg font-bold text-azulProfundo mt-1">Marta (Comuna 7)</h3>
+                            <p class="text-sm text-grafito mt-3 leading-relaxed">Cocina para eventos y administra negocio de barrio. Su hoja de vida no lo refleja y sus horarios dependen del cuidado de sus hijos.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-100 text-xs text-terracota font-semibold flex items-center"><i class="bi bi-check-circle mr-1"></i> Filtros de horario compatibles con cuidado</div>
+                    </div>
+
+                    <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-azulProfundo/10 text-azulProfundo flex items-center justify-center text-xl mb-4"><i class="bi bi-accessibility"></i></div>
+                            <span class="text-xs font-bold text-azulProfundo uppercase tracking-wider">Persona con Discapacidad</span>
+                            <h3 class="text-lg font-bold text-azulProfundo mt-1">Camila (Comuna 5)</h3>
+                            <p class="text-sm text-grafito mt-3 leading-relaxed">Habilidades de diseño y atención al chat. Las plataformas tradicionales no son accesibles y faltan ajustes razonables declarados.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-100 text-xs text-azulProfundo font-semibold flex items-center"><i class="bi bi-check-circle mr-1"></i> Ajustes razonables visibles opcionales</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: SIMULADOR WHATSAPP MULTI-USUARIO -->
+        <div x-show="activeTab === 'whatsapp'" class="space-y-6 animate-fadeIn" style="display: none;">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Tecnología Cívica en Acción</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Simulador Multi-Usuario del Bot de WhatsApp PULSO</h2>
+                <p class="text-sm text-grafito">Selecciona abajo qué usuario deseas simular para probar diferentes perfiles del territorio (Pepito, Marta o Camila).</p>
+            </div>
+
+            <!-- Selector de Usuario -->
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <button @click="selectedUser = 'pepito'; resetWa();" :class="selectedUser === 'pepito' ? 'bg-tealPortuario text-white shadow-md' : 'bg-white text-azulProfundo border border-blue-200'" class="px-4 py-2 rounded-xl text-xs font-bold transition">
+                    👦 Pepito (Joven - Comuna 12)
+                </button>
+                <button @click="selectedUser = 'marta'; resetWa();" :class="selectedUser === 'marta' ? 'bg-tealPortuario text-white shadow-md' : 'bg-white text-azulProfundo border border-blue-200'" class="px-4 py-2 rounded-xl text-xs font-bold transition">
+                    👩 Marta (Madre Cuidadora - Comuna 7)
+                </button>
+                <button @click="selectedUser = 'camila'; resetWa();" :class="selectedUser === 'camila' ? 'bg-tealPortuario text-white shadow-md' : 'bg-white text-azulProfundo border border-blue-200'" class="px-4 py-2 rounded-xl text-xs font-bold transition">
+                    🧑‍🦽 Camila (Discapacidad - Comuna 5)
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mt-4">
+                <!-- Chat Window -->
+                <div class="lg:col-span-7 bg-white rounded-3xl shadow-lg border border-blue-100 overflow-hidden flex flex-col h-[580px]">
+                    <div class="bg-tealPortuario text-white px-6 py-4 flex items-center justify-between shadow">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <div class="w-10 h-10 rounded-full bg-white text-tealPortuario flex items-center justify-center font-bold text-lg">
+                                    <i class="bi bi-robot"></i>
+                                </div>
+                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></span>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-sm">PULSO Bot [Oficial Buenaventura]</h3>
+                                <span class="text-xs text-teal-100" x-text="'Simulando a: ' + usersData[selectedUser].name"></span>
+                            </div>
+                        </div>
+                        <button @click="resetWa()" class="text-xs bg-white/25 hover:bg-white/35 text-white px-3 py-1.5 rounded-lg transition font-semibold">
+                            <i class="bi bi-arrow-counterclockwise mr-1"></i> Reiniciar
+                        </button>
+                    </div>
+
+                    <div class="flex-grow p-4 overflow-y-auto space-y-4 bg-[#f0f2f5]">
+                        <template x-for="msg in waMessages">
+                            <div class="flex" :class="msg.sender === 'user' ? 'justify-end' : 'justify-start'">
+                                <div class="max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-sm"
+                                     :class="msg.sender === 'user' ? 'bg-[#dcf8c6] text-azulProfundo rounded-tr-none' : 'bg-white text-azulProfundo rounded-tl-none border border-gray-200'">
+                                    <div class="font-bold text-xs text-tealPortuario mb-1" x-text="msg.sender === 'user' ? usersData[selectedUser].name : 'Asistente PULSO'"></div>
+                                    <p class="leading-relaxed" x-text="msg.text"></p>
+                                </div>
+                            </div>
+                        </template>
+
+                        <div x-show="matchResult" class="bg-tealPortuario/10 border border-tealPortuario/30 rounded-2xl p-4 text-azulProfundo space-y-2 animate-fadeIn">
+                            <div class="flex items-center justify-between">
+                                <span class="font-extrabold text-tealPortuario text-sm"><i class="bi bi-patch-check-fill mr-1"></i> Match Explicable y Trazable</span>
+                                <span class="bg-tealPortuario text-white px-2 py-0.5 rounded text-xs font-bold" x-text="matchResult.score + ' Afinidad'"></span>
+                            </div>
+                            <p class="text-xs text-grafito">Empresa verif.: <strong x-text="matchResult.company"></strong> &bull; Oportunidad: <strong x-text="matchResult.role"></strong></p>
+                            <p class="text-xs text-grafito">Beneficio / Ruta: <strong x-text="matchResult.stipend"></strong></p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white border-t border-gray-200 flex flex-col gap-2">
+                        <template x-if="waStep === 0">
+                            <button @click="sendAudioNote()" class="w-full bg-tealPortuario hover:bg-tealHover text-white py-3 px-4 rounded-xl font-bold text-sm shadow transition flex items-center justify-center space-x-2">
+                                <i class="bi bi-mic-fill text-lg animate-pulse"></i>
+                                <span x-text="'Enviar Nota de Voz de ' + usersData[selectedUser].name"></span>
+                            </button>
+                        </template>
+                        <template x-if="waStep === 1">
+                            <button @click="confirmMatch()" class="w-full bg-terracota hover:bg-amber-700 text-white py-3 px-4 rounded-xl font-bold text-sm shadow transition flex items-center justify-center space-x-2">
+                                <i class="bi bi-check2-circle text-lg"></i>
+                                <span>Confirmar Disponibilidad y Ajustes del Perfil</span>
+                            </button>
+                        </template>
+                        <template x-if="waStep >= 2">
+                            <div class="text-center text-xs font-bold text-tealPortuario py-2">
+                                ¡Proceso completado con éxito! Ver en Mapa Vivo.
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Explainer Panel -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
+                        <h3 class="font-extrabold text-azulProfundo text-lg flex items-center">
+                            <i class="bi bi-info-circle-fill text-tealPortuario mr-2"></i>
+                            Perfil Activo: <span class="text-tealPortuario ml-1" x-text="usersData[selectedUser].name"></span>
+                        </h3>
+                        <p class="text-sm text-grafito leading-relaxed">
+                            Este simulador demuestra cómo PULSO atiende necesidades diferenciadas: jóvenes sin experiencia, madres cuidadoras con restricciones horarias, y personas con discapacidad requiriendo ajustes razonables, todo mediante WhatsApp y sin hojas de vida.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: MAPA VIVO TERRITORIO (OPENSTREETMAP REAL) -->
+        <div x-show="activeTab === 'dashboard-vivo'" class="space-y-6 animate-fadeIn" style="display: none;">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Georreferenciación en Tiempo Real</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Mapa Vivo de Capacidades y Demanda (OpenStreetMap)</h2>
+                <p class="text-sm text-grafito">Visualizador interactivo basado en Leaflet y OpenStreetMap con calor de vacantes y talento disponible en Buenaventura.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="card-glass p-6 rounded-3xl shadow-sm space-y-2 border-l-4 border-tealPortuario">
+                    <div class="text-xs font-bold text-grafito uppercase">Talento Registrado</div>
+                    <div class="text-3xl font-extrabold text-azulProfundo">1.240</div>
+                    <div class="text-xs text-tealPortuario font-semibold">52% mujeres &bull; 18% con discapacidad</div>
+                </div>
+                <div class="card-glass p-6 rounded-3xl shadow-sm space-y-2 border-l-4 border-terracota">
+                    <div class="text-xs font-bold text-grafito uppercase">Vacantes Verificadas</div>
+                    <div class="text-3xl font-extrabold text-azulProfundo">86</div>
+                    <div class="text-xs text-terracota font-semibold">Actualizado en tiempo real</div>
+                </div>
+                <div class="card-glass p-6 rounded-3xl shadow-sm space-y-2 border-l-4 border-tealPortuario">
+                    <div class="text-3xl font-extrabold text-azulProfundo">93%</div>
+                    <div class="text-xs font-bold text-grafito uppercase">Afinidad Promedio en Matches</div>
+                    <div class="text-xs text-grafito">Tiempo medido: &lt;48h al primer contacto</div>
+                </div>
+                <div class="card-glass p-6 rounded-3xl shadow-sm space-y-2 border-l-4 border-azulProfundo">
+                    <div class="text-3xl font-extrabold text-azulProfundo">7.4x</div>
+                    <div class="text-xs font-bold text-grafito uppercase">Retorno Social / Ahorro Fiscal</div>
+                    <div class="text-xs text-grafito">Activación económica local medible</div>
+                </div>
+            </div>
+
+            <!-- Contenedor del Mapa OpenStreetMap Real -->
+            <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+                    <h3 class="font-extrabold text-azulProfundo text-lg flex items-center">
+                        <i class="bi bi-pin-map-fill text-tealPortuario mr-2"></i> Mapa Cívico de Calor - Comunas 5, 7, 10 y 12 (Buenaventura)
+                    </h3>
+                    <span class="text-xs bg-tealPortuario/10 text-tealPortuario px-3 py-1 rounded-full font-bold animate-pulse">● En Vivo (OSM API)</span>
+                </div>
+                
+                <div id="map"></div>
+            </div>
+        </div>
+
+        <!-- TAB 4: MICRO-CREDENCIALES Y REPUTACIÓN -->
+        <div x-show="activeTab === 'reputacion'" class="space-y-6 animate-fadeIn" style="display: none;">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-terracota bg-terracota/10 px-3 py-1 rounded-full">Validación de Experiencia</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Insignias de "Encargo Cumplido" (Micro-Credenciales)</h2>
+                <p class="text-sm text-grafito">Reemplaza la falta de experiencia formal con evidencia real y validada tras interacciones confirmadas.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+                <div class="card-glass p-8 rounded-3xl shadow-sm space-y-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 rounded-2xl bg-terracota/10 text-terracota flex items-center justify-center text-3xl font-bold">
+                            <i class="bi bi-award-fill"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-terracota uppercase">Insignia Verificada en BD Cívica</span>
+                            <h3 class="text-xl font-extrabold text-azulProfundo">Auxiliar de Refrigeración Naval</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-grafito leading-relaxed">
+                        Otorgada tras completar con éxito micro-pasantías en talleres locales aliados. Valida puntualidad y destreza real sin exigir títulos universitarios previos.
+                    </p>
+                    <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
+                        <span class="text-xs font-semibold text-grafito">Validado por: Don Amador (Empresario Aliado)</span>
+                        <span class="bg-tealPortuario/10 text-tealPortuario px-3 py-1 rounded-lg text-xs font-bold">Verificado</span>
+                    </div>
+                </div>
+
+                <div class="card-glass p-8 rounded-3xl shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-azulProfundo text-lg flex items-center">
+                        <i class="bi bi-book-half text-tealPortuario mr-2"></i> Formación Exprés SENA Barrial
+                    </h3>
+                    <p class="text-sm text-grafito leading-relaxed">
+                        Cuando el tablero detecta vacantes sin cubrir, el bot sugiere micro-capacitaciones con auxilio de movilidad ($140.000 COP) y ludoteca para madres cuidadoras.
+                    </p>
+                    <div class="p-4 rounded-2xl bg-tealPortuario/5 border border-tealPortuario/20 text-xs text-azulProfundo font-semibold">
+                        <i class="bi bi-lightbulb-fill text-tealPortuario mr-1"></i> Resultado: Días, no semestres. Conexión directa al encargo real.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: INCLUSIÓN Y SEGURIDAD -->
+        <div x-show="activeTab === 'inclusion'" class="space-y-6 animate-fadeIn" style="display: none;">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Confianza y Seguridad</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Entorno Seguro Laboral y Verificación de Empleadores</h2>
+                <p class="text-sm text-grafito">Monitoreo activo de seguridad, botón de reporte y validación estricta de NITs antes de publicar vacantes.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Verificación de Empresas y Alertas -->
+                <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-azulProfundo text-base flex items-center">
+                        <i class="bi bi-shield-check text-tealPortuario mr-2 text-xl"></i> Tablero de Seguridad y Verificación de NITs
+                    </h3>
+                    <p class="text-xs text-grafito">Estado en tiempo real de los negocios y talleres registrados en el piloto:</p>
+
+                    <div class="space-y-3">
+                        <template x-for="alert in safetyAlerts" :key="alert.id">
+                            <div class="p-3 rounded-2xl bg-gray-50 border border-gray-200 flex items-center justify-between text-xs">
+                                <div>
+                                    <strong class="text-azulProfundo block" x-text="alert.title"></strong>
+                                    <span :class="alert.color" x-text="alert.status"></span>
+                                </div>
+                                <i class="bi bi-patch-check-fill text-tealPortuario text-lg"></i>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Botón de Reporte y Primeros Encucuentros Seguros -->
+                <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-azulProfundo text-base flex items-center">
+                        <i class="bi bi-exclamation-triangle-fill text-terracota mr-2 text-xl"></i> Alerta Comunitaria & Botón de Reporte
+                    </h3>
+                    <p class="text-xs text-grafito">Herramienta preventiva para postulantes y comercios, con recomendaciones para primeros encuentros seguros:</p>
+
+                    <div class="p-4 rounded-2xl bg-terracota/10 border border-terracota/30 space-y-3">
+                        <div class="text-xs font-bold text-azulProfundo">Simular Alerta / Reporte Preventivo:</div>
+                        <button @click="reportSent = true" class="w-full bg-terracota hover:bg-amber-700 text-white py-2.5 rounded-xl font-bold text-xs shadow transition flex items-center justify-center space-x-1">
+                            <i class="bi bi-shield-exclamation mr-1"></i>
+                            <span x-text="reportSent ? 'Alerta Recibida y Verificada por Moderación' : 'Reportar Inquietud o Verificar Empleador'"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: MODELO FINANCIERO E INVERSIÓN -->
+        <div x-show="activeTab === 'financials'" class="space-y-6 animate-fadeIn" style="display: none;">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Sostenibilidad y Escala</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Modelo Financiero Híbrido & Solicitud de Inversión (Ask)</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
+                <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-tealPortuario/10 text-tealPortuario flex items-center justify-center text-xl mb-4"><i class="bi bi-cash-stack"></i></div>
+                        <h3 class="text-lg font-bold text-azulProfundo">Monetización Híbrida</h3>
+                        <ul class="text-sm text-grafito mt-3 space-y-2">
+                            <li><strong class="text-azulProfundo">B2G (70% ARR):</strong> Licencia Distrital de Software Cívico a Alcaldía y Cajas ($4M COP / mes).</li>
+                            <li><strong class="text-azulProfundo">B2B (30% ARR):</strong> Suscripción PYME y talleres ($80.000 COP / mes).</li>
+                            <li><span class="text-tealPortuario font-bold">Postulantes 100% GRATIS.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-terracota/10 text-terracota flex items-center justify-center text-xl mb-4"><i class="bi bi-calculator"></i></div>
+                        <h3 class="text-lg font-bold text-azulProfundo">Unit Economics</h3>
+                        <ul class="text-sm text-grafito mt-3 space-y-3">
+                            <li class="flex justify-between items-center border-b border-gray-100 pb-2">
+                                <span class="text-grafito">CAC por Postulante:</span>
+                                <span class="font-extrabold text-azulProfundo">Muy bajo (Viralidad WA)</span>
+                            </li>
+                            <li class="flex justify-between items-center border-b border-gray-100 pb-2">
+                                <span class="text-grafito">Costo por Conexión:</span>
+                                <span class="font-extrabold text-tealPortuario">Eficiente lean</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="text-grafito">Retorno Social / Fiscal:</span>
+                                <span class="font-extrabold text-terracota">7.4x</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between bg-gradient-to-br from-tealPortuario/5 to-white">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-tealPortuario text-white flex items-center justify-center text-xl mb-4"><i class="bi bi-rocket-takeoff"></i></div>
+                        <h3 class="text-lg font-bold text-azulProfundo">Plan de Inversión (Ask)</h3>
+                        <p class="text-sm text-grafito mt-3 leading-relaxed">
+                            <strong class="text-azulProfundo text-base block mb-2">Financiación Piloto</strong>
+                            40% Desarrollo de producto e IA, 25% Adquisición de usuarios en terreno, 20% Alianzas institucionales, 15% Legal y datos.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-200 text-xs font-bold text-tealPortuario flex items-center justify-between">
+                        <span>Breakeven: Mes 9</span>
+                        <span class="bg-tealPortuario text-white px-2 py-1 rounded">1.200 Beneficiarios</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-glass rounded-3xl p-8 text-center space-y-4 mt-8">
+                <blockquote class="text-lg sm:text-xl font-bold text-azulProfundo italic max-w-2xl mx-auto">
+                    "En Buenaventura el desempleo no se resuelve desde un escritorio; lo resolvemos conectando las capacidades vivas de nuestra gente en el territorio."
+                </blockquote>
+                <div class="text-xs font-semibold text-grafito">
+                    Alianzas activas con SENA Regional Valle &bull; HinoDev / Inodev
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-blue-100 py-4 hidden lg:block">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-xs font-semibold text-grafito">
+            <div class="flex items-center space-x-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-tealPortuario animate-pulse"></span>
+                <span>PULSO Civic Tech &bull; Plataforma Web Interactiva</span>
+            </div>
+            <div>
+                <span>Buenaventura, Valle del Cauca &bull; Piloto Comunas 5, 7, 10 y 12</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
