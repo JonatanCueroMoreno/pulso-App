@@ -10,7 +10,7 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <!-- Leaflet CSS for OpenStreetMap -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <!-- Google Fonts -->
@@ -37,7 +37,7 @@
             </div>
 
             <!-- Tab Navigation Links -->
-            <nav class="hidden lg:flex items-center space-x-1">
+            <nav class="hidden 2xl:flex items-center space-x-1">
                 <button @click="activeTab = 'dashboard'" :class="activeTab === 'dashboard' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
                     <i class="bi bi-grid-1x2"></i><span>Resumen Tesis</span>
                 </button>
@@ -59,7 +59,7 @@
             </nav>
 
             <div class="flex items-center space-x-2">
-                <span class="text-xs bg-terracota/10 text-terracota font-bold px-3 py-1.5 rounded-full hidden sm:inline-block">
+                <span class="text-xs bg-terracota/10 text-terracota font-bold px-3 py-1.5 rounded-full hidden 2xl:inline-block">
                     Piloto Comunas 5, 7, 10 y 12
                 </span>
             </div>
@@ -67,7 +67,7 @@
     </header>
 
     <!-- Mobile Nav Bar (Bottom) -->
-    <div class="lg:hidden bg-white border-t border-blue-100 fixed bottom-0 left-0 right-0 z-50 px-2 py-2 flex justify-around shadow-lg">
+    <div class="2xl:hidden bg-white border-t border-blue-100 fixed bottom-0 left-0 right-0 z-50 px-2 py-2 flex justify-around shadow-lg">
         <button @click="activeTab = 'dashboard'" :class="activeTab === 'dashboard' ? 'text-tealPortuario' : 'text-grafito'" class="flex flex-col items-center text-[10px] font-bold">
             <i class="bi bi-grid-1x2 text-base"></i><span>Inicio</span>
         </button>
@@ -86,7 +86,7 @@
     </div>
 
     <!-- Main Content Area -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full pb-24 lg:pb-8">
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full pb-24 2xl:pb-8">
 
         <!-- TAB 1: RESUMEN TESIS -->
         <div x-show="activeTab === 'dashboard'" class="space-y-8 animate-fadeIn">
@@ -196,13 +196,13 @@
             <!-- Selector de Usuario -->
             <div class="flex flex-wrap items-center justify-center gap-3">
                 <button @click="selectedUser = 'pepito'; resetWa();" :class="selectedUser === 'pepito' ? 'bg-tealPortuario text-white shadow-md' : 'bg-white text-azulProfundo border border-blue-200'" class="px-4 py-2 rounded-xl text-xs font-bold transition">
-                    👦 Pepito (Joven - Comuna 12)
+                    <i class="bi bi-person-fill mr-1" aria-hidden="true"></i> Pepito (Joven - Comuna 12)
                 </button>
                 <button @click="selectedUser = 'marta'; resetWa();" :class="selectedUser === 'marta' ? 'bg-tealPortuario text-white shadow-md' : 'bg-white text-azulProfundo border border-blue-200'" class="px-4 py-2 rounded-xl text-xs font-bold transition">
-                    👩 Marta (Madre Cuidadora - Comuna 7)
+                    <i class="bi bi-heart-pulse-fill mr-1" aria-hidden="true"></i> Marta (Madre Cuidadora - Comuna 7)
                 </button>
                 <button @click="selectedUser = 'camila'; resetWa();" :class="selectedUser === 'camila' ? 'bg-tealPortuario text-white shadow-md' : 'bg-white text-azulProfundo border border-blue-200'" class="px-4 py-2 rounded-xl text-xs font-bold transition">
-                    🧑‍🦽 Camila (Discapacidad - Comuna 5)
+                    <i class="bi bi-universal-access-circle mr-1" aria-hidden="true"></i> Camila (Discapacidad - Comuna 5)
                 </button>
             </div>
 
@@ -232,7 +232,10 @@
                             <div class="flex" :class="msg.sender === 'user' ? 'justify-end' : 'justify-start'">
                                 <div class="max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-sm"
                                      :class="msg.sender === 'user' ? 'bg-[#dcf8c6] text-azulProfundo rounded-tr-none' : 'bg-white text-azulProfundo rounded-tl-none border border-gray-200'">
-                                    <div class="font-bold text-xs text-tealPortuario mb-1" x-text="msg.sender === 'user' ? usersData[selectedUser].name : 'Asistente PULSO'"></div>
+                                    <div class="font-bold text-xs text-tealPortuario mb-1 flex items-center gap-1.5">
+                                        <i :class="msg.sender === 'user' ? 'bi bi-person-circle' : 'bi bi-robot'" aria-hidden="true"></i>
+                                        <span x-text="msg.sender === 'user' ? usersData[selectedUser].name : 'Asistente PULSO'"></span>
+                                    </div>
                                     <p class="leading-relaxed" x-text="msg.text"></p>
                                 </div>
                             </div>
@@ -489,7 +492,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-blue-100 py-4 hidden lg:block">
+    <footer class="bg-white border-t border-blue-100 py-4 hidden 2xl:block">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-xs font-semibold text-grafito">
             <div class="flex items-center space-x-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-tealPortuario animate-pulse"></span>

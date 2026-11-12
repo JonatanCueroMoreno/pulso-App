@@ -1,12 +1,103 @@
+:root {
+    color-scheme: light;
+    --pulso-ink: #102a36;
+    --pulso-muted: #52666d;
+    --pulso-teal: #087f75;
+    --pulso-border: rgba(15, 73, 83, 0.1);
+    --pulso-shadow: 0 18px 50px rgba(18, 54, 66, 0.08);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    background-color: #f8f9ff;
-    color: #0b1c30;
+    background:
+        radial-gradient(ellipse at 8% 0%, rgba(13, 148, 136, 0.09), transparent 34rem),
+        radial-gradient(ellipse at 96% 28%, rgba(255, 185, 95, 0.11), transparent 30rem),
+        #f6f9f8;
+    color: var(--pulso-ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+header {
+    background: rgba(255, 255, 255, 0.86) !important;
+    border-color: var(--pulso-border) !important;
+    box-shadow: 0 8px 28px rgba(18, 54, 66, 0.05) !important;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+header > div {
+    min-height: 4.5rem;
+}
+
+main {
+    min-height: 70vh;
 }
 
 .card-glass {
-    background: rgba(255, 255, 255, 0.98);
-    border: 1px solid #e5eeff;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid var(--pulso-border);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 26px rgba(18, 54, 66, 0.045);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.card-glass:hover {
+    border-color: rgba(8, 127, 117, 0.2);
+    box-shadow: var(--pulso-shadow);
+}
+
+main > div > .card-glass:first-child {
+    background:
+        radial-gradient(ellipse at 100% 0%, rgba(13, 148, 136, 0.12), transparent 34rem),
+        rgba(255, 255, 255, 0.94);
+}
+
+nav button,
+button {
+    font: inherit;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:focus-visible,
+[role="button"]:focus-visible {
+    outline: 3px solid rgba(8, 127, 117, 0.4);
+    outline-offset: 3px;
+}
+
+nav button {
+    white-space: nowrap;
+}
+
+.bi {
+    line-height: 1;
+    vertical-align: -0.08em;
+}
+
+.animate-fadeIn {
+    animation: pulso-enter 260ms ease both;
+}
+
+.leaflet-container {
+    font-family: inherit;
 }
 
 #map {
@@ -14,4 +105,47 @@ body {
     width: 100%;
     border-radius: 1.5rem;
     z-index: 10;
+    box-shadow: inset 0 0 0 1px var(--pulso-border), 0 12px 32px rgba(18, 54, 66, 0.1);
+}
+
+footer {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border-color: var(--pulso-border) !important;
+}
+
+@keyframes pulso-enter {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 640px) {
+    main {
+        padding-top: 1.25rem;
+    }
+
+    main > div > .card-glass:first-child {
+        padding: 1.5rem;
+    }
+
+    .card-glass:hover {
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
