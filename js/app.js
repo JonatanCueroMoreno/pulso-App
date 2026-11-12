@@ -18,6 +18,13 @@ document.addEventListener('alpine:init', () => {
               { userId: 'camila', title: 'Atención al cliente por chat', area: 'Diseño y atención digital' },
               { userId: 'camila', title: 'Asistente de contenidos accesibles', area: 'Diseño y atención digital' }
           ],
+          offerMarkerProfiles: [
+              { userId: 'pepito', icon: 'bi-phone-fill', offset: [0, 0] },
+              { userId: 'marta', icon: 'bi-egg-fried', offset: [0.0016, 0.0018] },
+              { userId: 'camila', icon: 'bi-laptop-fill', offset: [-0.0016, 0.0018] }
+          ],
+          currentTime: new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+          clockTimer: null,
           get employmentAnalytics() {
               const profiles = Object.entries(this.usersData).map(([userId, user]) => ({
                   userId,
@@ -55,6 +62,19 @@ document.addEventListener('alpine:init', () => {
           initSimulator() {
               this.resetWa();
           },
+          startClock() {
+              if (this.clockTimer) return;
+              this.clockTimer = setInterval(() => {
+                  this.currentTime = new Date().toLocaleTimeString('es-CO', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      second: '2-digit'
+                  });
+              }, 1000);
+          },
+          destroy() {
+              if (this.clockTimer) clearInterval(this.clockTimer);
+          },
           sendAudioNote() {
               const current = this.usersData[this.selectedUser];
               this.waMessages.push({
@@ -74,20 +94,23 @@ document.addEventListener('alpine:init', () => {
               }, 1000);
           },
           confirmMatch() {
-              const current = this.usersData[this.selectedUser];
+              const selectedUser = this.selectedUser;
+              const current = this.usersData[selectedUser];
               this.waMessages.push({ sender: 'user', text: 'Sí, quiero ver una sugerencia según mis preferencias.' });
               this.waStep = 2;
               setTimeout(() => {
+                  const suggestions = this.jobSuggestions.filter(suggestion => suggestion.userId === selectedUser);
                   const response = 'Tomamos nota de tu preferencia de horario ' + current.schedule.toLowerCase() +
                       ', modalidad ' + current.modality.toLowerCase() + ' y apoyo de accesibilidad: ' +
                       current.accessibility + '. Por tus habilidades, podrías explorar puestos relacionados con "' +
-                      current.roleMatch + '". PULSO no tiene vacantes conectadas y no puede confirmar empleadores ni condiciones actuales.';
-                  this.waMessages.push({ sender: 'bot', text: response });
+                      current.roleMatch + '". Opciones orientativas (no son vacantes reales):';
+                  this.waMessages.push({ sender: 'bot', text: response, suggestions });
                   this.matchResult = {
                       role: current.roleMatch,
                       schedule: current.schedule,
                       modality: current.modality,
-                      accessibility: current.accessibility
+                      accessibility: current.accessibility,
+                      suggestions
                   };
               }, 1200);
           },
@@ -100,13 +123,49 @@ document.addEventListener('alpine:init', () => {
           },
           
           initMap() {
+              this.startClock();
               setTimeout(() => {
                   if(window.mapInitialized) return;
-                  let map = L.map('map').setView([3.8801, -77.0312], 13);
+                  const referencePoint = [3.8801, -77.0312];
+                  const map = L.map('map').setView(referencePoint, 14);
                   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                       maxZoom: 19,
                       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors • PULSO Cívico'
                   }).addTo(map);
+
+                  this.offerMarkerProfiles.forEach(profile => {
+                      const user = this.usersData[profile.userId];
+                      const suggestions = this.jobSuggestions.filter(suggestion => suggestion.userId === profile.userId);
+                      const popup = document.createElement('div');
+                      const title = document.createElement('strong');
+                      const list = document.createElement('ul');
+                      const note = document.createElement('p');
+
+                      title.textContent = user.name.split(' (')[0] + ' · Opciones sugeridas';
+                      suggestions.forEach(suggestion => {
+                          const item = document.createElement('li');
+                          item.textContent = suggestion.title;
+                          list.appendChild(item);
+                      });
+                      note.textContent = 'Solo lectura. Ejemplos ficticios; no son vacantes reales. Punto de referencia visual, no ubicación de un empleo.';
+                      popup.append(title, list, note);
+
+                      const icon = L.divIcon({
+                          className: 'offer-map-marker-container',
+                          html: '<span class="offer-map-marker" aria-hidden="true"><i class="bi ' + profile.icon + '"></i></span>',
+                          iconSize: [40, 40],
+                          iconAnchor: [20, 20]
+                      });
+                      const position = [
+                          referencePoint[0] + profile.offset[0],
+                          referencePoint[1] + profile.offset[1]
+                      ];
+
+                      L.marker(position, {
+                          icon,
+                          title: 'Ver opciones de ' + user.name.split(' (')[0] + ' (solo lectura)'
+                      }).bindPopup(popup, { maxWidth: 280 }).addTo(map);
+                  });
 
                   window.mapInitialized = true;
               }, 300);

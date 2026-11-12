@@ -392,6 +392,16 @@
                                         <span x-text="msg.sender === 'user' ? usersData[selectedUser].name : 'Asistente PULSO'"></span>
                                     </div>
                                     <p class="leading-relaxed" x-text="msg.text"></p>
+                                    <template x-if="msg.suggestions && msg.suggestions.length">
+                                        <ul class="mt-2 space-y-1 border-t border-gray-100 pt-2 text-sm">
+                                            <template x-for="suggestion in msg.suggestions" :key="suggestion.title">
+                                                <li class="flex items-start gap-2">
+                                                    <i class="bi bi-briefcase-fill mt-0.5 text-tealPortuario" aria-hidden="true"></i>
+                                                    <span x-text="suggestion.title"></span>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </template>
                                 </div>
                             </div>
                         </template>
@@ -400,6 +410,17 @@
                             <div class="bg-tealPortuario/10 border border-tealPortuario/30 rounded-2xl p-4 text-azulProfundo space-y-2 animate-fadeIn">
                                 <span class="font-extrabold text-tealPortuario text-sm"><i class="bi bi-lightbulb-fill mr-1"></i> Orientación laboral</span>
                                 <p class="text-xs text-grafito">Área relacionada con tu perfil: <strong x-text="matchResult.role"></strong></p>
+                                <div>
+                                    <p class="text-xs font-semibold text-grafito">Opciones sugeridas · no son vacantes reales:</p>
+                                    <ul class="mt-1 space-y-1 text-xs text-azulProfundo">
+                                        <template x-for="suggestion in matchResult.suggestions" :key="suggestion.title">
+                                            <li class="flex items-start gap-2">
+                                                <i class="bi bi-briefcase-fill mt-0.5 text-tealPortuario" aria-hidden="true"></i>
+                                                <span x-text="suggestion.title"></span>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </div>
                                 <p class="text-xs text-grafito">Preferencia: <strong x-text="matchResult.schedule + ', modalidad ' + matchResult.modality.toLowerCase()"></strong></p>
                                 <p class="text-xs text-grafito">Apoyo solicitado: <strong x-text="matchResult.accessibility"></strong></p>
                                 <p class="text-xs font-semibold text-grafito">No hay una vacante ni un empleador verificados para ofrecerte.</p>
@@ -475,9 +496,9 @@
 
         <div x-show="activeTab === 'dashboard-vivo'" class="space-y-6 animate-fadeIn" style="display: none;">
             <div class="text-center max-w-2xl mx-auto space-y-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Ubicación de referencia</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Mapa de Buenaventura</h2>
-                <p class="text-sm text-grafito">Mapa base de OpenStreetMap. Aún no hay datos de vacantes ni personas conectados.</p>
+                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Ofertas de demostración</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Mapa de opciones laborales</h2>
+                <p class="text-sm text-grafito">Mapa base de OpenStreetMap con iconos de solo lectura para explorar las opciones ficticias de cada perfil.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -503,15 +524,21 @@
                 </div>
             </div>
 
-            <!-- Mapa base de OpenStreetMap; no hay vacantes conectadas -->
+            <!-- Los marcadores son ilustrativos; no representan ubicaciones reales de trabajo. -->
             <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
-                <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+                <div class="flex flex-col gap-3 border-b border-gray-100 pb-4 sm:flex-row sm:items-center sm:justify-between">
                     <h3 class="font-extrabold text-azulProfundo text-lg flex items-center">
-                        <i class="bi bi-pin-map-fill text-tealPortuario mr-2"></i> Ubicación
+                        <i class="bi bi-pin-map-fill text-tealPortuario mr-2"></i> Opciones por perfil
                     </h3>
-                    <span class="text-xs bg-amber-100 text-amber-900 px-3 py-1 rounded-full font-bold">Sin vacantes conectadas</span>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-xs bg-amber-100 text-amber-900 px-3 py-1 rounded-full font-bold">Marcadores ficticios · solo lectura</span>
+                        <span class="text-xs bg-tealPortuario/10 text-tealPortuario px-3 py-1 rounded-full font-bold" aria-live="polite">
+                            Hora local actual: <time x-text="currentTime"></time>
+                        </span>
+                    </div>
                 </div>
-                
+
+                <p class="text-xs leading-relaxed text-grafito">La hora se actualiza en vivo; las opciones no. Los iconos se distribuyen solo como referencia visual: no indican direcciones ni ubicaciones reales de empleos.</p>
                 <div id="map"></div>
             </div>
         </div>
