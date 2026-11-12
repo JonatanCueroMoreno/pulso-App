@@ -564,54 +564,49 @@
         <!-- TAB 6: MODELO FINANCIERO E INVERSIÓN -->
         <div x-show="activeTab === 'financials'" class="space-y-6 animate-fadeIn" style="display: none;">
             <div class="text-center max-w-2xl mx-auto space-y-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Propuesta por revisar</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Estimación de planeación · 2026 · COP</span>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Cómo podría sostenerse el proyecto</h2>
-                <p class="text-sm text-grafito">No hay ingresos, precios ni presupuesto confirmados.</p>
+                <p class="text-sm text-grafito">Presupuesto estimado para un piloto de 9 meses en Buenaventura. Falta validar con cotizaciones.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
                 <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between">
                     <div>
                         <div class="w-10 h-10 rounded-xl bg-tealPortuario/10 text-tealPortuario flex items-center justify-center text-xl mb-4"><i class="bi bi-cash-stack"></i></div>
-                        <h3 class="text-lg font-bold text-azulProfundo">Posibles fuentes de ingreso</h3>
-                        <ul class="text-sm text-grafito mt-3 space-y-2">
-                            <li><strong class="text-azulProfundo">Entidad pública:</strong> sin contratos registrados.</li>
-                            <li><strong class="text-azulProfundo">Negocio o taller:</strong> sin acuerdos registrados.</li>
-                            <li><strong class="text-azulProfundo">Tarifa para personas:</strong> por definir.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="w-10 h-10 rounded-xl bg-terracota/10 text-terracota flex items-center justify-center text-xl mb-4"><i class="bi bi-calculator"></i></div>
-                        <h3 class="text-lg font-bold text-azulProfundo">Costos por definir</h3>
+                        <h3 class="text-lg font-bold text-azulProfundo">Ingresos por gestionar</h3>
                         <ul class="text-sm text-grafito mt-3 space-y-3">
-                            <li class="flex justify-between items-center border-b border-gray-100 pb-2">
-                                <span class="text-grafito">Atención por persona:</span>
-                                <span class="font-extrabold text-azulProfundo">Por cotizar</span>
-                            </li>
-                            <li class="flex justify-between items-center">
-                                <span class="text-grafito">Beneficio social:</span>
-                                <span class="font-extrabold text-terracota">Por medir</span>
-                            </li>
+                            <li class="border-b border-gray-100 pb-2"><strong class="text-azulProfundo">Entidades públicas:</strong> posibles convenios; ninguno confirmado.</li>
+                            <li class="border-b border-gray-100 pb-2"><strong class="text-azulProfundo">Negocios:</strong> aporte por definir; sin acuerdos vigentes.</li>
+                            <li><strong class="text-azulProfundo">Personas usuarias:</strong> tarifa por definir.</li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between bg-gradient-to-br from-tealPortuario/5 to-white">
+                <div class="card-glass p-6 rounded-3xl shadow-sm lg:col-span-2 bg-gradient-to-br from-tealPortuario/5 to-white">
                     <div>
                         <div class="w-10 h-10 rounded-xl bg-tealPortuario text-white flex items-center justify-center text-xl mb-4"><i class="bi bi-rocket-takeoff"></i></div>
-                        <h3 class="text-lg font-bold text-azulProfundo">Presupuesto</h3>
-                        <p class="mt-4 text-sm text-grafito">No hay un presupuesto aprobado ni cotizaciones publicadas para este proyecto.</p>
-                    </div>
-                    <div class="mt-6 pt-4 border-t border-gray-200 text-xs font-bold text-tealPortuario flex items-center justify-between">
-                        <span>Sin financiación confirmada</span>
+                        <div class="flex flex-wrap items-end justify-between gap-3">
+                            <div>
+                                <h3 class="text-lg font-bold text-azulProfundo">Inversión estimada del piloto</h3>
+                                <p class="text-xs text-grafito">9 meses · un desarrollador, coordinación y actividades locales</p>
+                            </div>
+                            <div class="text-2xl font-extrabold text-tealPortuario">$150.000.000 COP</div>
+                        </div>
+                        <ul class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm text-grafito">
+                            <li class="flex justify-between gap-3 border-b border-gray-200 pb-2"><span>Desarrollo y soporte ($6 M × 9 meses)</span><strong class="text-azulProfundo">$54 M</strong></li>
+                            <li class="flex justify-between gap-3 border-b border-gray-200 pb-2"><span>Coordinación ($4 M × 9 meses)</span><strong class="text-azulProfundo">$36 M</strong></li>
+                            <li class="flex justify-between gap-3 border-b border-gray-200 pb-2"><span>Trabajo local y transporte ($2 M × 9 meses)</span><strong class="text-azulProfundo">$18 M</strong></li>
+                            <li class="flex justify-between gap-3 border-b border-gray-200 pb-2"><span>Accesibilidad y pruebas con personas</span><strong class="text-azulProfundo">$9 M</strong></li>
+                            <li class="flex justify-between gap-3 border-b border-gray-200 pb-2"><span>Alojamiento web y herramientas ($0,6 M × 9 meses)</span><strong class="text-azulProfundo">$5,4 M</strong></li>
+                            <li class="flex justify-between gap-3 border-b border-gray-200 pb-2"><span>Protección de datos y asesoría legal</span><strong class="text-azulProfundo">$6 M</strong></li>
+                            <li class="flex justify-between gap-3 border-b border-gray-200 pb-2"><span>Capacitación y evaluación</span><strong class="text-azulProfundo">$7,6 M</strong></li>
+                            <li class="flex justify-between gap-3 border-b border-gray-200 pb-2"><span>Reserva para imprevistos</span><strong class="text-azulProfundo">$14 M</strong></li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <p class="text-center text-xs text-grafito">No se muestran precios ni presupuestos inventados. Las cifras se publicarán cuando estén respaldadas por acuerdos y cotizaciones.</p>
+            <p class="text-center text-xs text-grafito">Estimación de planeación, no es una cotización ni financiación aprobada. Supone honorarios por servicios; si se contrata personal en nómina, hay que sumar prestaciones y aportes. No incluye pagos o auxilios a participantes.</p>
         </div>
 
     </main>
