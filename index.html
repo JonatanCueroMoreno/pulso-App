@@ -339,7 +339,7 @@
                         </button>
                     </div>
 
-                    <div class="flex-grow p-4 overflow-y-auto space-y-4 bg-[#f0f2f5]">
+                    <div class="flex-grow p-4 overflow-y-auto space-y-4 bg-[#f0f2f5]" role="log" aria-live="polite" aria-relevant="additions text" aria-label="Conversación de ejemplo">
                         <template x-for="msg in waMessages">
                             <div class="flex" :class="msg.sender === 'user' ? 'justify-end' : 'justify-start'">
                                 <div class="max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-sm"
@@ -361,6 +361,8 @@
                                 </div>
                                 <p class="text-xs text-grafito">Lugar de ejemplo, no confirmado: <strong x-text="matchResult.company"></strong> &bull; Trabajo de muestra: <strong x-text="matchResult.role"></strong></p>
                                 <p class="text-xs text-grafito">Apoyo sugerido, no ofrecido: <strong x-text="matchResult.stipend"></strong></p>
+                                <p class="text-xs text-grafito">Tus preferencias: <strong x-text="matchResult.schedule + ', modalidad ' + matchResult.modality.toLowerCase()"></strong></p>
+                                <p class="text-xs text-grafito">Accesibilidad: <strong x-text="matchResult.accessibility"></strong> (por revisar con el lugar).</p>
                             </div>
                         </template>
                     </div>
@@ -394,8 +396,38 @@
                             Perfil de ejemplo: <span class="text-tealPortuario ml-1" x-text="usersData[selectedUser].name"></span>
                         </h3>
                         <p class="text-sm text-grafito leading-relaxed">
-                            Esta demostración muestra cómo el servicio podría ayudar a jóvenes sin experiencia, madres cuidadoras y personas que necesitan apoyos de accesibilidad. No procesa solicitudes ni conecta con empleadores reales.
+                            Elige las condiciones que prefieres. El asistente las tendrá en cuenta al mostrarte un empleo de muestra. No verifica vacantes ni confirma que un lugar pueda ofrecer esos ajustes.
                         </p>
+                    </div>
+                    <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
+                        <h3 class="font-extrabold text-azulProfundo text-base flex items-center">
+                            <i class="bi bi-sliders text-tealPortuario mr-2" aria-hidden="true"></i> Mis preferencias y accesibilidad
+                        </h3>
+                        <div>
+                            <label for="preferred-schedule" class="block text-sm font-bold text-azulProfundo mb-1">Horario que prefiero</label>
+                            <select id="preferred-schedule" x-model="usersData[selectedUser].schedule" class="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-azulProfundo focus:outline-none focus:ring-2 focus:ring-tealPortuario">
+                                <template x-for="option in scheduleOptions" :key="option">
+                                    <option :value="option" x-text="option"></option>
+                                </template>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="preferred-modality" class="block text-sm font-bold text-azulProfundo mb-1">Modalidad que prefiero</label>
+                            <select id="preferred-modality" x-model="usersData[selectedUser].modality" class="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-azulProfundo focus:outline-none focus:ring-2 focus:ring-tealPortuario">
+                                <template x-for="option in modalityOptions" :key="option">
+                                    <option :value="option" x-text="option"></option>
+                                </template>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="accessibility-support" class="block text-sm font-bold text-azulProfundo mb-1">Apoyo o ajuste que necesito</label>
+                            <select id="accessibility-support" x-model="usersData[selectedUser].accessibility" class="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-azulProfundo focus:outline-none focus:ring-2 focus:ring-tealPortuario">
+                                <template x-for="option in accessibilityOptions[selectedUser]" :key="option">
+                                    <option :value="option" x-text="option"></option>
+                                </template>
+                            </select>
+                        </div>
+                        <p class="text-xs text-grafito">Puedes cambiar estas opciones. Son preferencias de ejemplo; los apoyos se deben acordar con cada lugar.</p>
                     </div>
                 </div>
             </div>
