@@ -39,28 +39,28 @@
             <!-- Tab Navigation Links -->
             <nav class="hidden 2xl:flex items-center space-x-1">
                 <button @click="activeTab = 'dashboard'" :class="activeTab === 'dashboard' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
-                    <i class="bi bi-grid-1x2"></i><span>Resumen Tesis</span>
+                    <i class="bi bi-grid-1x2"></i><span>Inicio</span>
                 </button>
                 <button @click="activeTab = 'whatsapp'; initSimulator();" :class="activeTab === 'whatsapp' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
-                    <i class="bi bi-whatsapp"></i><span>Simulador Multi-Usuario AI</span>
+                    <i class="bi bi-whatsapp"></i><span>Simulador de perfiles</span>
                 </button>
                 <button @click="activeTab = 'dashboard-vivo'; initMap();" :class="activeTab === 'dashboard-vivo' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
-                    <i class="bi bi-map"></i><span>Mapa Vivo OSM (Tiempo Real)</span>
+                    <i class="bi bi-map"></i><span>Mapa de ejemplo</span>
                 </button>
                 <button @click="activeTab = 'reputacion'" :class="activeTab === 'reputacion' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
-                    <i class="bi bi-award"></i><span>Micro-Credenciales</span>
+                    <i class="bi bi-award"></i><span>Insignias de habilidades</span>
                 </button>
                 <button @click="activeTab = 'inclusion'" :class="activeTab === 'inclusion' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
                     <i class="bi bi-shield-heart"></i><span>Inclusión & Seguridad</span>
                 </button>
                 <button @click="activeTab = 'financials'" :class="activeTab === 'financials' ? 'bg-tealPortuario text-white shadow' : 'text-grafito hover:bg-gray-100'" class="px-3 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
-                    <i class="bi bi-graph-up-arrow"></i><span>Modelo & Inversión</span>
+                    <i class="bi bi-graph-up-arrow"></i><span>Ingresos y presupuesto</span>
                 </button>
             </nav>
 
             <div class="flex items-center space-x-2">
                 <span class="text-xs bg-terracota/10 text-terracota font-bold px-3 py-1.5 rounded-full hidden 2xl:inline-block">
-                    Piloto Comunas 5, 7, 10 y 12
+                    Propuesta para comunas 5, 7, 10 y 12
                 </span>
             </div>
         </div>
@@ -72,10 +72,10 @@
             <i class="bi bi-grid-1x2 text-base"></i><span>Inicio</span>
         </button>
         <button @click="activeTab = 'whatsapp'; initSimulator();" :class="activeTab === 'whatsapp' ? 'text-tealPortuario' : 'text-grafito'" class="flex flex-col items-center text-[10px] font-bold">
-            <i class="bi bi-whatsapp text-base"></i><span>Bot WA</span>
+            <i class="bi bi-whatsapp text-base"></i><span>Conversación</span>
         </button>
         <button @click="activeTab = 'dashboard-vivo'; initMap();" :class="activeTab === 'dashboard-vivo' ? 'text-tealPortuario' : 'text-grafito'" class="flex flex-col items-center text-[10px] font-bold">
-            <i class="bi bi-map text-base"></i><span>Mapa Vivo</span>
+            <i class="bi bi-map text-base"></i><span>Mapa</span>
         </button>
         <button @click="activeTab = 'reputacion'" :class="activeTab === 'reputacion' ? 'text-tealPortuario' : 'text-grafito'" class="flex flex-col items-center text-[10px] font-bold">
             <i class="bi bi-award text-base"></i><span>Insignias</span>
@@ -87,6 +87,15 @@
 
     <!-- Main Content Area -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full pb-24 2xl:pb-8">
+        <div class="mb-8 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-azulProfundo" role="note">
+            <div class="flex items-start gap-3">
+                <i class="bi bi-info-circle-fill mt-0.5 text-terracota" aria-hidden="true"></i>
+                <p class="mb-0 leading-relaxed">
+                    <strong>Sobre las cifras:</strong> este prototipo todavía no tiene resultados reales registrados.
+                    Las cantidades y porcentajes son ejemplos o estimaciones para conversar; precios, presupuesto y metas son tentativos y deben confirmarse con datos, cotizaciones y posibles aliados.
+                </p>
+            </div>
+        </div>
 
         <!-- TAB 1: RESUMEN TESIS -->
         <div x-show="activeTab === 'dashboard'" class="space-y-8 animate-fadeIn">
@@ -96,49 +105,49 @@
                 <div class="max-w-3xl space-y-6 relative z-10">
                     <div class="inline-flex items-center space-x-2 bg-tealPortuario/10 text-tealPortuario px-4 py-1.5 rounded-full text-sm font-bold">
                         <i class="bi bi-geo-alt-fill"></i>
-                        <span>Piloto Buenaventura (Valle del Cauca) &bull; Comunas 5, 7, 10 y 12</span>
+                        <span>Propuesta para Buenaventura, Valle del Cauca</span>
                     </div>
 
                     <h1 class="text-3xl sm:text-5xl font-extrabold text-azulProfundo tracking-tight leading-tight">
-                        PULSO: Conexión Territorial de Capacidades y Empleo en Tiempo Real
+                        Conectamos lo que la gente sabe hacer con oportunidades en Buenaventura
                     </h1>
 
                     <p class="text-lg sm:text-xl text-grafito leading-relaxed">
-                        Sistema cívico en WhatsApp que recopila, integra y analiza en tiempo real lo que las personas saben hacer y lo que el territorio necesita, sin exigir hojas de vida.
+                        Propuesta de servicio por WhatsApp para acercar las habilidades de las personas a las oportunidades de su comunidad, sin exigir hoja de vida. Esta página es una demostración: no consulta ofertas ni registros reales.
                     </p>
 
                     <div class="pt-4 flex flex-wrap gap-4">
                         <button @click="activeTab = 'whatsapp'; initSimulator();" class="bg-tealPortuario hover:bg-tealHover text-white px-6 py-3 rounded-xl font-bold shadow-lg transition flex items-center space-x-2">
                             <i class="bi bi-whatsapp text-lg"></i>
-                            <span>Probar Simulador Multi-Usuario</span>
+                            <span>Ver ejemplo de conversación</span>
                         </button>
                         <button @click="activeTab = 'dashboard-vivo'; initMap();" class="bg-white border border-blue-200 hover:bg-gray-50 text-azulProfundo px-6 py-3 rounded-xl font-bold shadow-sm transition flex items-center space-x-2">
                             <i class="bi bi-map text-tealPortuario text-lg"></i>
-                            <span>Abrir Mapa OSM en Tiempo Real</span>
+                            <span>Ver mapa de ejemplo</span>
                         </button>
                     </div>
                 </div>
 
                 <div class="mt-12 pt-8 border-t border-gray-100 grid grid-cols-1 sm:grid-cols-3 gap-6">
                     <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
-                        <div class="w-12 h-12 rounded-xl bg-tealPortuario/10 text-tealPortuario flex items-center justify-center text-2xl font-bold">0</div>
+                        <div class="w-12 h-12 rounded-xl bg-tealPortuario/10 text-tealPortuario flex items-center justify-center text-2xl"><i class="bi bi-file-earmark-person"></i></div>
                         <div>
-                            <div class="text-xs font-semibold text-grafito uppercase">Hojas de Vida requeridas</div>
-                            <div class="text-sm font-bold text-azulProfundo">Inclusión directa por voz y texto</div>
+                            <div class="text-xs font-semibold text-grafito uppercase">Sin hoja de vida</div>
+                            <div class="text-sm font-bold text-azulProfundo">Cuenta tus habilidades con voz o texto</div>
                         </div>
                     </div>
                     <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
-                        <div class="w-12 h-12 rounded-xl bg-terracota/10 text-terracota flex items-center justify-center text-xl font-bold">&lt;4m</div>
+                        <div class="w-12 h-12 rounded-xl bg-terracota/10 text-terracota flex items-center justify-center text-xl"><i class="bi bi-stopwatch"></i></div>
                         <div>
-                            <div class="text-xs font-semibold text-grafito uppercase">Match Explicable y Trazable</div>
-                            <div class="text-sm font-bold text-azulProfundo">Conecta habilidad con necesidad</div>
+                            <div class="text-xs font-semibold text-grafito uppercase">Meta tentativa: menos de 4 min</div>
+                            <div class="text-sm font-bold text-azulProfundo">Para sugerir una oportunidad; aún por probar</div>
                         </div>
                     </div>
                     <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
                         <div class="w-12 h-12 rounded-xl bg-tealPortuario/10 text-tealPortuario flex items-center justify-center text-2xl"><i class="bi bi-shield-check"></i></div>
                         <div>
-                            <div class="text-xs font-semibold text-grafito uppercase">Diseño Inclusivo & Seguro</div>
-                            <div class="text-sm font-bold text-azulProfundo">Ley 1618 & Protección de Datos</div>
+                            <div class="text-xs font-semibold text-grafito uppercase">Accesible y cuidadoso</div>
+                            <div class="text-sm font-bold text-azulProfundo">Respeto por las personas y sus datos</div>
                         </div>
                     </div>
                 </div>
@@ -147,8 +156,8 @@
             <!-- Escenarios del problema -->
             <div class="space-y-4">
                 <div class="text-center max-w-2xl mx-auto space-y-1">
-                    <span class="text-xs font-bold uppercase tracking-wider text-terracota bg-terracota/10 px-3 py-1 rounded-full">Casos Reales del Territorio</span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Tres Personas, Un Mismo Problema de Asimetría</h2>
+                    <span class="text-xs font-bold uppercase tracking-wider text-terracota bg-terracota/10 px-3 py-1 rounded-full">Historias de ejemplo</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Tres personas y distintas barreras para encontrar trabajo</h2>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
@@ -157,9 +166,9 @@
                             <div class="w-10 h-10 rounded-xl bg-tealPortuario/10 text-tealPortuario flex items-center justify-center text-xl mb-4"><i class="bi bi-person-badge"></i></div>
                             <span class="text-xs font-bold text-tealPortuario uppercase tracking-wider">Joven (21 años)</span>
                             <h3 class="text-lg font-bold text-azulProfundo mt-1">Pepito (Comuna 12)</h3>
-                            <p class="text-sm text-grafito mt-3 leading-relaxed">Sabe reparar celulares y manejar redes, aprende rápido. No logra conectar sus habilidades porque no tiene experiencia formal.</p>
+                            <p class="text-sm text-grafito mt-3 leading-relaxed">Sabe reparar celulares y manejar redes, aprende rápido. Le cuesta mostrar lo que sabe porque no tiene experiencia formal.</p>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-gray-100 text-xs text-tealPortuario font-semibold flex items-center"><i class="bi bi-check-circle mr-1"></i> Perfil por Capacidades (Prueba en Bot)</div>
+                        <div class="mt-6 pt-4 border-t border-gray-100 text-xs text-tealPortuario font-semibold flex items-center"><i class="bi bi-check-circle mr-1"></i> Perfil de ejemplo para probar el simulador</div>
                     </div>
 
                     <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between">
@@ -177,9 +186,9 @@
                             <div class="w-10 h-10 rounded-xl bg-azulProfundo/10 text-azulProfundo flex items-center justify-center text-xl mb-4"><i class="bi bi-accessibility"></i></div>
                             <span class="text-xs font-bold text-azulProfundo uppercase tracking-wider">Persona con Discapacidad</span>
                             <h3 class="text-lg font-bold text-azulProfundo mt-1">Camila (Comuna 5)</h3>
-                            <p class="text-sm text-grafito mt-3 leading-relaxed">Habilidades de diseño y atención al chat. Las plataformas tradicionales no son accesibles y faltan ajustes razonables declarados.</p>
+                            <p class="text-sm text-grafito mt-3 leading-relaxed">Tiene habilidades de diseño y atención por chat. Necesita que las herramientas sean accesibles y cuenten con los apoyos adecuados.</p>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-gray-100 text-xs text-azulProfundo font-semibold flex items-center"><i class="bi bi-check-circle mr-1"></i> Ajustes razonables visibles opcionales</div>
+                        <div class="mt-6 pt-4 border-t border-gray-100 text-xs text-azulProfundo font-semibold flex items-center"><i class="bi bi-check-circle mr-1"></i> Apoyos de accesibilidad a acordar</div>
                     </div>
                 </div>
             </div>
@@ -188,9 +197,9 @@
         <!-- TAB 2: SIMULADOR WHATSAPP MULTI-USUARIO -->
         <div x-show="activeTab === 'whatsapp'" class="space-y-6 animate-fadeIn" style="display: none;">
             <div class="text-center max-w-2xl mx-auto space-y-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Tecnología Cívica en Acción</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Simulador Multi-Usuario del Bot de WhatsApp PULSO</h2>
-                <p class="text-sm text-grafito">Selecciona abajo qué usuario deseas simular para probar diferentes perfiles del territorio (Pepito, Marta o Camila).</p>
+                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Un servicio pensado para la comunidad</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Ejemplo de conversación por WhatsApp</h2>
+                <p class="text-sm text-grafito">Elige un perfil de muestra para ver cómo podría funcionar el servicio. Los nombres, empleos y pagos no son ofertas reales.</p>
             </div>
 
             <!-- Selector de Usuario -->
@@ -218,8 +227,8 @@
                                 <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></span>
                             </div>
                             <div>
-                                <h3 class="font-bold text-sm">PULSO Bot [Oficial Buenaventura]</h3>
-                                <span class="text-xs text-teal-100" x-text="'Simulando a: ' + usersData[selectedUser].name"></span>
+                                <h3 class="font-bold text-sm">Asistente de ejemplo de PULSO</h3>
+                                <span class="text-xs text-teal-100" x-text="'Perfil de muestra: ' + usersData[selectedUser].name"></span>
                             </div>
                         </div>
                         <button @click="resetWa()" class="text-xs bg-white/25 hover:bg-white/35 text-white px-3 py-1.5 rounded-lg transition font-semibold">
@@ -244,11 +253,11 @@
                         <template x-if="matchResult">
                             <div class="bg-tealPortuario/10 border border-tealPortuario/30 rounded-2xl p-4 text-azulProfundo space-y-2 animate-fadeIn">
                                 <div class="flex items-center justify-between">
-                                    <span class="font-extrabold text-tealPortuario text-sm"><i class="bi bi-patch-check-fill mr-1"></i> Match Explicable y Trazable</span>
-                                    <span class="bg-tealPortuario text-white px-2 py-0.5 rounded text-xs font-bold" x-text="matchResult.score + ' Afinidad'"></span>
+                                    <span class="font-extrabold text-tealPortuario text-sm"><i class="bi bi-lightbulb-fill mr-1"></i> Coincidencia de ejemplo</span>
+                                    <span class="bg-tealPortuario text-white px-2 py-0.5 rounded text-xs font-bold" x-text="matchResult.score + ' estimado'"></span>
                                 </div>
-                                <p class="text-xs text-grafito">Empresa verif.: <strong x-text="matchResult.company"></strong> &bull; Oportunidad: <strong x-text="matchResult.role"></strong></p>
-                                <p class="text-xs text-grafito">Beneficio / Ruta: <strong x-text="matchResult.stipend"></strong></p>
+                                <p class="text-xs text-grafito">Lugar de ejemplo, no confirmado: <strong x-text="matchResult.company"></strong> &bull; Trabajo de muestra: <strong x-text="matchResult.role"></strong></p>
+                                <p class="text-xs text-grafito">Apoyo sugerido, no ofrecido: <strong x-text="matchResult.stipend"></strong></p>
                             </div>
                         </template>
                     </div>
@@ -256,8 +265,8 @@
                     <div class="p-4 bg-white border-t border-gray-200 flex flex-col gap-2">
                         <template x-if="waStep === 0">
                             <button @click="sendAudioNote()" class="w-full bg-tealPortuario hover:bg-tealHover text-white py-3 px-4 rounded-xl font-bold text-sm shadow transition flex items-center justify-center space-x-2">
-                                <i class="bi bi-mic-fill text-lg animate-pulse"></i>
-                                <span x-text="'Enviar Nota de Voz de ' + usersData[selectedUser].name"></span>
+                                <i class="bi bi-mic-fill text-lg"></i>
+                                <span x-text="'Simular nota de voz de ' + usersData[selectedUser].name"></span>
                             </button>
                         </template>
                         <template x-if="waStep === 1">
@@ -268,7 +277,7 @@
                         </template>
                         <template x-if="waStep >= 2">
                             <div class="text-center text-xs font-bold text-tealPortuario py-2">
-                                ¡Proceso completado con éxito! Ver en Mapa Vivo.
+                                Ejemplo completado. Puedes ver el mapa de muestra.
                             </div>
                         </template>
                     </div>
@@ -279,54 +288,54 @@
                     <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
                         <h3 class="font-extrabold text-azulProfundo text-lg flex items-center">
                             <i class="bi bi-info-circle-fill text-tealPortuario mr-2"></i>
-                            Perfil Activo: <span class="text-tealPortuario ml-1" x-text="usersData[selectedUser].name"></span>
+                            Perfil de ejemplo: <span class="text-tealPortuario ml-1" x-text="usersData[selectedUser].name"></span>
                         </h3>
                         <p class="text-sm text-grafito leading-relaxed">
-                            Este simulador demuestra cómo PULSO atiende necesidades diferenciadas: jóvenes sin experiencia, madres cuidadoras con restricciones horarias, y personas con discapacidad requiriendo ajustes razonables, todo mediante WhatsApp y sin hojas de vida.
+                            Esta demostración muestra cómo el servicio podría ayudar a jóvenes sin experiencia, madres cuidadoras y personas que necesitan apoyos de accesibilidad. No procesa solicitudes ni conecta con empleadores reales.
                         </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 3: MAPA VIVO TERRITORIO (OPENSTREETMAP REAL) -->
+        <!-- TAB 3: MAPA DE EJEMPLO DEL TERRITORIO -->
         <div x-show="activeTab === 'dashboard-vivo'" class="space-y-6 animate-fadeIn" style="display: none;">
             <div class="text-center max-w-2xl mx-auto space-y-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Georreferenciación en Tiempo Real</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Mapa Vivo de Capacidades y Demanda (OpenStreetMap)</h2>
-                <p class="text-sm text-grafito">Visualizador interactivo basado en Leaflet y OpenStreetMap con calor de vacantes y talento disponible en Buenaventura.</p>
+                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Ubicación de referencia</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Mapa de ejemplo de Buenaventura</h2>
+                <p class="text-sm text-grafito">El mapa usa OpenStreetMap como fondo. Los círculos y cantidades son ilustrativos: no muestran personas ni vacantes registradas.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div class="card-glass p-6 rounded-3xl shadow-sm space-y-2 border-l-4 border-tealPortuario">
-                    <div class="text-xs font-bold text-grafito uppercase">Talento Registrado</div>
+                    <div class="text-xs font-bold text-grafito uppercase">Personas que se espera atender</div>
                     <div class="text-3xl font-extrabold text-azulProfundo">1.240</div>
-                    <div class="text-xs text-tealPortuario font-semibold">52% mujeres &bull; 18% con discapacidad</div>
+                    <div class="text-xs text-tealPortuario font-semibold">Meta tentativa; distribución por confirmar</div>
                 </div>
                 <div class="card-glass p-6 rounded-3xl shadow-sm space-y-2 border-l-4 border-terracota">
-                    <div class="text-xs font-bold text-grafito uppercase">Vacantes Verificadas</div>
+                    <div class="text-xs font-bold text-grafito uppercase">Oportunidades que se esperan publicar</div>
                     <div class="text-3xl font-extrabold text-azulProfundo">86</div>
-                    <div class="text-xs text-terracota font-semibold">Actualizado en tiempo real</div>
+                    <div class="text-xs text-terracota font-semibold">Meta tentativa; aún no confirmada</div>
                 </div>
                 <div class="card-glass p-6 rounded-3xl shadow-sm space-y-2 border-l-4 border-tealPortuario">
-                    <div class="text-3xl font-extrabold text-azulProfundo">93%</div>
-                    <div class="text-xs font-bold text-grafito uppercase">Afinidad Promedio en Matches</div>
-                    <div class="text-xs text-grafito">Tiempo medido: &lt;48h al primer contacto</div>
+                    <div class="text-3xl font-extrabold text-azulProfundo">Por medir</div>
+                    <div class="text-xs font-bold text-grafito uppercase">Qué tan bien encajan perfil y trabajo</div>
+                    <div class="text-xs text-grafito">Se sabrá al probar el servicio con personas</div>
                 </div>
                 <div class="card-glass p-6 rounded-3xl shadow-sm space-y-2 border-l-4 border-azulProfundo">
-                    <div class="text-3xl font-extrabold text-azulProfundo">7.4x</div>
-                    <div class="text-xs font-bold text-grafito uppercase">Retorno Social / Ahorro Fiscal</div>
-                    <div class="text-xs text-grafito">Activación económica local medible</div>
+                    <div class="text-3xl font-extrabold text-azulProfundo">Por estimar</div>
+                    <div class="text-xs font-bold text-grafito uppercase">Beneficio para la comunidad</div>
+                    <div class="text-xs text-grafito">Hace falta medir los resultados del piloto</div>
                 </div>
             </div>
 
-            <!-- Contenedor del Mapa OpenStreetMap Real -->
+            <!-- Mapa de referencia de OpenStreetMap con datos demostrativos -->
             <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
                 <div class="flex items-center justify-between border-b border-gray-100 pb-4">
                     <h3 class="font-extrabold text-azulProfundo text-lg flex items-center">
-                        <i class="bi bi-pin-map-fill text-tealPortuario mr-2"></i> Mapa Cívico de Calor - Comunas 5, 7, 10 y 12 (Buenaventura)
+                        <i class="bi bi-pin-map-fill text-tealPortuario mr-2"></i> Zonas de referencia - Comunas 5, 7, 10 y 12
                     </h3>
-                    <span class="text-xs bg-tealPortuario/10 text-tealPortuario px-3 py-1 rounded-full font-bold animate-pulse">● En Vivo (OSM API)</span>
+                    <span class="text-xs bg-amber-100 text-amber-900 px-3 py-1 rounded-full font-bold">Datos de muestra; no es en vivo</span>
                 </div>
                 
                 <div id="map"></div>
@@ -336,9 +345,9 @@
         <!-- TAB 4: MICRO-CREDENCIALES Y REPUTACIÓN -->
         <div x-show="activeTab === 'reputacion'" class="space-y-6 animate-fadeIn" style="display: none;">
             <div class="text-center max-w-2xl mx-auto space-y-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-terracota bg-terracota/10 px-3 py-1 rounded-full">Validación de Experiencia</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Insignias de "Encargo Cumplido" (Micro-Credenciales)</h2>
-                <p class="text-sm text-grafito">Reemplaza la falta de experiencia formal con evidencia real y validada tras interacciones confirmadas.</p>
+                <span class="text-xs font-bold uppercase tracking-wider text-terracota bg-terracota/10 px-3 py-1 rounded-full">Reconocer lo que sabes hacer</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Insignias por trabajos y tareas realizadas</h2>
+                <p class="text-sm text-grafito">Propuesta para reconocer experiencia demostrada en tareas reales. Las insignias de esta página son ejemplos y aún no están validadas.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
@@ -348,28 +357,28 @@
                             <i class="bi bi-award-fill"></i>
                         </div>
                         <div>
-                            <span class="text-xs font-bold text-terracota uppercase">Insignia Verificada en BD Cívica</span>
+                            <span class="text-xs font-bold text-terracota uppercase">Ejemplo de insignia propuesta</span>
                             <h3 class="text-xl font-extrabold text-azulProfundo">Auxiliar de Refrigeración Naval</h3>
                         </div>
                     </div>
                     <p class="text-sm text-grafito leading-relaxed">
-                        Otorgada tras completar con éxito micro-pasantías en talleres locales aliados. Valida puntualidad y destreza real sin exigir títulos universitarios previos.
+                        Podría entregarse después de completar una tarea y recibir confirmación del empleador. Este ejemplo todavía no corresponde a una experiencia comprobada.
                     </p>
                     <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
-                        <span class="text-xs font-semibold text-grafito">Validado por: Don Amador (Empresario Aliado)</span>
-                        <span class="bg-tealPortuario/10 text-tealPortuario px-3 py-1 rounded-lg text-xs font-bold">Verificado</span>
+                        <span class="text-xs font-semibold text-grafito">Validación con un empleador: pendiente</span>
+                        <span class="bg-amber-100 text-amber-900 px-3 py-1 rounded-lg text-xs font-bold">Por confirmar</span>
                     </div>
                 </div>
 
                 <div class="card-glass p-8 rounded-3xl shadow-sm space-y-4">
                     <h3 class="font-extrabold text-azulProfundo text-lg flex items-center">
-                        <i class="bi bi-book-half text-tealPortuario mr-2"></i> Formación Exprés SENA Barrial
+                        <i class="bi bi-book-half text-tealPortuario mr-2"></i> Aprendizaje corto en el barrio
                     </h3>
                     <p class="text-sm text-grafito leading-relaxed">
-                        Cuando el tablero detecta vacantes sin cubrir, el bot sugiere micro-capacitaciones con auxilio de movilidad ($140.000 COP) y ludoteca para madres cuidadoras.
+                        Si se confirma una necesidad de trabajo, se podrían ofrecer cursos cortos y apoyos de cuidado. El auxilio de $140.000 COP es un ejemplo tentativo, no un monto aprobado.
                     </p>
                     <div class="p-4 rounded-2xl bg-tealPortuario/5 border border-tealPortuario/20 text-xs text-azulProfundo font-semibold">
-                        <i class="bi bi-lightbulb-fill text-tealPortuario mr-1"></i> Resultado: Días, no semestres. Conexión directa al encargo real.
+                        <i class="bi bi-lightbulb-fill text-tealPortuario mr-1"></i> Idea por validar con quienes buscan y ofrecen trabajo.
                     </div>
                 </div>
             </div>
@@ -379,17 +388,17 @@
         <div x-show="activeTab === 'inclusion'" class="space-y-6 animate-fadeIn" style="display: none;">
             <div class="text-center max-w-2xl mx-auto space-y-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Confianza y Seguridad</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Entorno Seguro Laboral y Verificación de Empleadores</h2>
-                <p class="text-sm text-grafito">Monitoreo activo de seguridad, botón de reporte y validación estricta de NITs antes de publicar vacantes.</p>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Cuidarnos al buscar trabajo</h2>
+                <p class="text-sm text-grafito">Propuesta de pautas para revisar ofertas y reportar inquietudes. Esta demostración no verifica negocios ni recibe reportes reales.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Verificación de Empresas y Alertas -->
                 <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
                     <h3 class="font-extrabold text-azulProfundo text-base flex items-center">
-                        <i class="bi bi-shield-check text-tealPortuario mr-2 text-xl"></i> Tablero de Seguridad y Verificación de NITs
+                        <i class="bi bi-shield-check text-tealPortuario mr-2 text-xl"></i> Ejemplo de revisión de ofertas
                     </h3>
-                    <p class="text-xs text-grafito">Estado en tiempo real de los negocios y talleres registrados en el piloto:</p>
+                    <p class="text-xs text-grafito">Los nombres y estados que aparecen aquí son de muestra; no representan una verificación real.</p>
 
                     <div class="space-y-3">
                         <template x-for="alert in safetyAlerts" :key="alert.id">
@@ -398,24 +407,24 @@
                                     <strong class="text-azulProfundo block" x-text="alert.title"></strong>
                                     <span :class="alert.color" x-text="alert.status"></span>
                                 </div>
-                                <i class="bi bi-patch-check-fill text-tealPortuario text-lg"></i>
+                                <i class="bi bi-chat-square-text-fill text-grafito text-lg" aria-hidden="true"></i>
                             </div>
                         </template>
                     </div>
                 </div>
 
-                <!-- Botón de Reporte y Primeros Encucuentros Seguros -->
+                <!-- Botón de reporte de demostración -->
                 <div class="card-glass p-6 rounded-3xl shadow-sm space-y-4">
                     <h3 class="font-extrabold text-azulProfundo text-base flex items-center">
                         <i class="bi bi-exclamation-triangle-fill text-terracota mr-2 text-xl"></i> Alerta Comunitaria & Botón de Reporte
                     </h3>
-                    <p class="text-xs text-grafito">Herramienta preventiva para postulantes y comercios, con recomendaciones para primeros encuentros seguros:</p>
+                    <p class="text-xs text-grafito">Idea para compartir inquietudes y acordar recomendaciones para encuentros seguros:</p>
 
                     <div class="p-4 rounded-2xl bg-terracota/10 border border-terracota/30 space-y-3">
                         <div class="text-xs font-bold text-azulProfundo">Simular Alerta / Reporte Preventivo:</div>
                         <button @click="reportSent = true" class="w-full bg-terracota hover:bg-amber-700 text-white py-2.5 rounded-xl font-bold text-xs shadow transition flex items-center justify-center space-x-1">
                             <i class="bi bi-shield-exclamation mr-1"></i>
-                            <span x-text="reportSent ? 'Alerta Recibida y Verificada por Moderación' : 'Reportar Inquietud o Verificar Empleador'"></span>
+                            <span x-text="reportSent ? 'Prueba realizada; no se envió ningún reporte' : 'Probar el botón (no envía un reporte real)'"></span>
                         </button>
                     </div>
                 </div>
@@ -425,19 +434,20 @@
         <!-- TAB 6: MODELO FINANCIERO E INVERSIÓN -->
         <div x-show="activeTab === 'financials'" class="space-y-6 animate-fadeIn" style="display: none;">
             <div class="text-center max-w-2xl mx-auto space-y-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Sostenibilidad y Escala</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Modelo Financiero Híbrido & Solicitud de Inversión (Ask)</h2>
+                <span class="text-xs font-bold uppercase tracking-wider text-tealPortuario bg-tealPortuario/10 px-3 py-1 rounded-full">Propuesta por revisar</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-azulProfundo">Cómo podría sostenerse el proyecto</h2>
+                <p class="text-sm text-grafito">No son precios ni acuerdos aprobados. Son ideas iniciales que deben revisarse con posibles aliados y cotizaciones.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
                 <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between">
                     <div>
                         <div class="w-10 h-10 rounded-xl bg-tealPortuario/10 text-tealPortuario flex items-center justify-center text-xl mb-4"><i class="bi bi-cash-stack"></i></div>
-                        <h3 class="text-lg font-bold text-azulProfundo">Monetización Híbrida</h3>
+                        <h3 class="text-lg font-bold text-azulProfundo">Posibles fuentes de ingreso</h3>
                         <ul class="text-sm text-grafito mt-3 space-y-2">
-                            <li><strong class="text-azulProfundo">B2G (70% ARR):</strong> Licencia Distrital de Software Cívico a Alcaldía y Cajas ($4M COP / mes).</li>
-                            <li><strong class="text-azulProfundo">B2B (30% ARR):</strong> Suscripción PYME y talleres ($80.000 COP / mes).</li>
-                            <li><span class="text-tealPortuario font-bold">Postulantes 100% GRATIS.</span></li>
+                            <li><strong class="text-azulProfundo">Entidades públicas (estimación: 70%):</strong> posible pago mensual de $4.000.000 COP por el servicio; precio tentativo, por negociar.</li>
+                            <li><strong class="text-azulProfundo">Negocios y talleres (estimación: 30%):</strong> posible aporte mensual de $80.000 COP; precio tentativo, por validar.</li>
+                            <li><span class="text-tealPortuario font-bold">Propuesta: gratis para quienes buscan trabajo.</span></li>
                         </ul>
                     </div>
                 </div>
@@ -445,19 +455,19 @@
                 <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between">
                     <div>
                         <div class="w-10 h-10 rounded-xl bg-terracota/10 text-terracota flex items-center justify-center text-xl mb-4"><i class="bi bi-calculator"></i></div>
-                        <h3 class="text-lg font-bold text-azulProfundo">Unit Economics</h3>
+                        <h3 class="text-lg font-bold text-azulProfundo">Costos e impacto: por calcular</h3>
                         <ul class="text-sm text-grafito mt-3 space-y-3">
                             <li class="flex justify-between items-center border-b border-gray-100 pb-2">
-                                <span class="text-grafito">CAC por Postulante:</span>
-                                <span class="font-extrabold text-azulProfundo">Muy bajo (Viralidad WA)</span>
+                                <span class="text-grafito">Costo para sumar a una persona:</span>
+                                <span class="font-extrabold text-azulProfundo">Por estimar</span>
                             </li>
                             <li class="flex justify-between items-center border-b border-gray-100 pb-2">
-                                <span class="text-grafito">Costo por Conexión:</span>
-                                <span class="font-extrabold text-tealPortuario">Eficiente lean</span>
+                                <span class="text-grafito">Costo por conectar a alguien:</span>
+                                <span class="font-extrabold text-tealPortuario">Por calcular</span>
                             </li>
                             <li class="flex justify-between items-center">
-                                <span class="text-grafito">Retorno Social / Fiscal:</span>
-                                <span class="font-extrabold text-terracota">7.4x</span>
+                                <span class="text-grafito">Beneficio para la comunidad:</span>
+                                <span class="font-extrabold text-terracota">Aún no calculado</span>
                             </li>
                         </ul>
                     </div>
@@ -466,15 +476,15 @@
                 <div class="card-glass p-6 rounded-3xl shadow-sm flex flex-col justify-between bg-gradient-to-br from-tealPortuario/5 to-white">
                     <div>
                         <div class="w-10 h-10 rounded-xl bg-tealPortuario text-white flex items-center justify-center text-xl mb-4"><i class="bi bi-rocket-takeoff"></i></div>
-                        <h3 class="text-lg font-bold text-azulProfundo">Plan de Inversión (Ask)</h3>
+                        <h3 class="text-lg font-bold text-azulProfundo">Presupuesto tentativo</h3>
                         <p class="text-sm text-grafito mt-3 leading-relaxed">
-                            <strong class="text-azulProfundo text-base block mb-2">Financiación Piloto</strong>
-                            40% Desarrollo de producto e IA, 25% Adquisición de usuarios en terreno, 20% Alianzas institucionales, 15% Legal y datos.
+                            <strong class="text-azulProfundo text-base block mb-2">Idea inicial para un piloto</strong>
+                            Reparto por revisar: 40% mejorar el servicio, 25% llegar a personas y negocios, 20% posibles alianzas y formación, 15% asesoría legal y cuidado de datos. Porcentajes tentativos, sujetos a cotizaciones.
                         </p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-gray-200 text-xs font-bold text-tealPortuario flex items-center justify-between">
-                        <span>Breakeven: Mes 9</span>
-                        <span class="bg-tealPortuario text-white px-2 py-1 rounded">1.200 Beneficiarios</span>
+                        <span>Meta tentativa: cubrir costos hacia el mes 9</span>
+                        <span class="bg-tealPortuario text-white px-2 py-1 rounded">Meta: 1.200 personas</span>
                     </div>
                 </div>
             </div>
@@ -484,7 +494,7 @@
                     "En Buenaventura el desempleo no se resuelve desde un escritorio; lo resolvemos conectando las capacidades vivas de nuestra gente en el territorio."
                 </blockquote>
                 <div class="text-xs font-semibold text-grafito">
-                    Alianzas activas con SENA Regional Valle &bull; HinoDev / Inodev
+                    Posibles aliados por conversar: SENA Regional Valle &bull; Pulso Social!
                 </div>
             </div>
         </div>
@@ -496,10 +506,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-xs font-semibold text-grafito">
             <div class="flex items-center space-x-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-tealPortuario animate-pulse"></span>
-                <span>PULSO Civic Tech &bull; Plataforma Web Interactiva</span>
+                <span>PULSO &bull; Una propuesta para acercar habilidades y oportunidades</span>
             </div>
             <div>
-                <span>Buenaventura, Valle del Cauca &bull; Piloto Comunas 5, 7, 10 y 12</span>
+                <span>Propuesta para Buenaventura, Valle del Cauca</span>
             </div>
         </div>
     </footer>

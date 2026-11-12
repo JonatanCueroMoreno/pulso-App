@@ -19,7 +19,7 @@ document.addEventListener('alpine:init', () => {
               this.waMessages.push({ sender: 'user', text: current.audioText });
               this.waStep = 1;
               setTimeout(() => {
-                  this.waMessages.push({ sender: 'bot', text: '¡Perfil extraído con éxito por IA! Sin hojas de vida. Detectamos tus destrezas y tus condiciones de horario/apoyo. ¿Confirmamos disponibilidad en tu comuna?' });
+                  this.waMessages.push({ sender: 'bot', text: 'Perfil de ejemplo registrado en el simulador. Esta demostración no usa inteligencia artificial ni analiza solicitudes reales. ¿Seguimos con el ejemplo?' });
               }, 1000);
           },
           confirmMatch() {
@@ -27,7 +27,7 @@ document.addEventListener('alpine:init', () => {
               this.waMessages.push({ sender: 'user', text: 'Sí, confirmo disponibilidad y condiciones.' });
               this.waStep = 2;
               setTimeout(() => {
-                  this.waMessages.push({ sender: 'bot', text: '¡MATCH EXPLICABLE EXITOSO (' + current.matchScore + ' Afinidad)! Empresa verif.: ' + current.company + '. Oportunidad: ' + current.roleMatch + '. Beneficio: ' + current.stipend + '.' });
+                  this.waMessages.push({ sender: 'bot', text: 'Coincidencia orientativa de ejemplo (' + current.matchScore + ', no medida). Lugar de trabajo sin confirmar: ' + current.company + '. Trabajo de muestra: ' + current.roleMatch + '. Apoyo sugerido, no ofrecido: ' + current.stipend + '.' });
                   this.matchResult = { score: current.matchScore, company: current.company, role: current.roleMatch, stipend: current.stipend };
               }, 1200);
           },
@@ -35,7 +35,7 @@ document.addEventListener('alpine:init', () => {
               this.waStep = 0;
               this.matchResult = null;
               this.waMessages = [
-                  { sender: 'bot', text: '¡Hola! Bienvenido a PULSO Buenaventura. Conectamos tus capacidades reales con empleos y encargos sin hoja de vida. Estás simulando a: ' + this.usersData[this.selectedUser].name + '. ¿Cómo prefieres registrarte?' }
+                  { sender: 'bot', text: '¡Hola! Estás viendo un ejemplo de PULSO Buenaventura. La propuesta busca acercar lo que sabes hacer a oportunidades de trabajo. Perfil de muestra: ' + this.usersData[this.selectedUser].name + '. ¿Vemos cómo podría funcionar?' }
               ];
           },
           
@@ -49,10 +49,10 @@ document.addEventListener('alpine:init', () => {
                   }).addTo(map);
 
                   let comunas = [
-                      { name: 'Comuna 10 (Foco Actual)', lat: 3.8750, lon: -77.0280, vacancies: 34, talent: 450, color: '#00685f' },
-                      { name: 'Comuna 12 (Talleres)', lat: 3.8680, lon: -77.0400, vacancies: 16, talent: 240, color: '#a36700' },
-                      { name: 'Comuna 7 (Comercio)', lat: 3.8850, lon: -77.0200, vacancies: 22, talent: 240, color: '#00685f' },
-                      { name: 'Comuna 5 (Logística)', lat: 3.8920, lon: -77.0150, vacancies: 14, talent: 310, color: '#00685f' }
+                      { name: 'Comuna 10 (zona de ejemplo)', lat: 3.8750, lon: -77.0280, vacancies: 34, talent: 450, color: '#00685f' },
+                      { name: 'Comuna 12 (zona de ejemplo)', lat: 3.8680, lon: -77.0400, vacancies: 16, talent: 240, color: '#a36700' },
+                      { name: 'Comuna 7 (zona de ejemplo)', lat: 3.8850, lon: -77.0200, vacancies: 22, talent: 240, color: '#00685f' },
+                      { name: 'Comuna 5 (zona de ejemplo)', lat: 3.8920, lon: -77.0150, vacancies: 14, talent: 310, color: '#00685f' }
                   ];
 
                   comunas.forEach(c => {
@@ -62,16 +62,16 @@ document.addEventListener('alpine:init', () => {
                           fillOpacity: 0.5,
                           radius: 450
                       }).addTo(map);
-                      circle.bindPopup('<b>' + c.name + '</b><br>Vacantes activas: ' + c.vacancies + '<br>Talento disponible: ' + c.talent);
+                      circle.bindPopup('<b>' + c.name + '</b><br>Oportunidades de muestra: ' + c.vacancies + '<br>Perfiles de muestra: ' + c.talent + '<br><em>Cifras ilustrativas; no son registros reales.</em>');
                   });
                   window.mapInitialized = true;
               }, 300);
           },
 
           safetyAlerts: [
-              { id: 1, title: 'Taller Don Amador (Comuna 10)', status: 'Verificado (NIT & Inspección física)', color: 'text-tealPortuario' },
-              { id: 2, title: 'Comercializadora Pacífico (Comuna 7)', status: 'Verificado & Con aval comunitario', color: 'text-tealPortuario' },
-              { id: 3, title: 'Alerta Reportada: Oferta dudosa sin NIT', status: 'Bloqueada por moderación PULSO', color: 'text-red-600' }
+              { id: 1, title: 'Taller de ejemplo (Comuna 10)', status: 'Estado de muestra; no verificado', color: 'text-terracota' },
+              { id: 2, title: 'Negocio de ejemplo (Comuna 7)', status: 'Revisión pendiente; no es un aliado confirmado', color: 'text-terracota' },
+              { id: 3, title: 'Ejemplo de oferta dudosa', status: 'Caso ilustrativo; no es una alerta real', color: 'text-terracota' }
           ],
           reportSent: false
       }));
